@@ -1,5 +1,9 @@
 package model.dao;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 
 /**
@@ -8,6 +12,7 @@ import java.sql.Timestamp;
  * @author GoodforGod
  * @since 16.02.2019
  */
+@Entity
 public class Person {
 
     public enum PersonType {
@@ -15,9 +20,7 @@ public class Person {
         TEACHER
     }
 
-    private int id;
-    private int study_id;
-    private int work_id;
+    @Id @GeneratedValue private int id;
 
     private String name;
     private String middle_name;
@@ -26,5 +29,7 @@ public class Person {
     private String birth_place;
     private PersonType type;
 
-
+    @OneToOne(mappedBy = "person") private WorkProgress workProgress;
+    @OneToOne(mappedBy = "person") private StudyProgress studyProgress;
+    @OneToOne(mappedBy = "person") private Schedule schedule;
 }

@@ -1,5 +1,6 @@
 package model.dao;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -8,12 +9,20 @@ import java.sql.Timestamp;
  * @author GoodforGod
  * @since 16.02.2019
  */
+@Entity
 public class WorkProgress {
 
-    private int id;
-    private int department_id;
+    @Id @GeneratedValue private int id;
 
     private Timestamp start_timestamp;
     private Timestamp end_timestamp;
     private String position;
+
+    @ManyToOne
+    @JoinColumn(name="department_id")
+    private Department department;
+
+    @OneToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 }
