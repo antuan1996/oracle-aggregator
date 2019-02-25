@@ -1,6 +1,6 @@
 package io.university.storage.impl;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * ! NO DESCRIPTION !
@@ -24,10 +24,10 @@ abstract class BasicStorageUtils<T, ID> {
         return (t == null);
     }
 
-    boolean isValid(List<T> ts) {
+    boolean isValid(Collection<T> ts) {
         return !isNotValid(ts);
     }
-    boolean isNotValid(List<T> ts) {
+    boolean isNotValid(Collection<T> ts) {
         return (ts == null || ts.isEmpty());
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class ScheduleStorage extends BasicSqlStorage<Schedule, Integer> {
+public class ScheduleStorage extends BasicJpaStorage<Schedule, Integer> {
 
     @Autowired
     public ScheduleStorage(final ScheduleRepository repository) {

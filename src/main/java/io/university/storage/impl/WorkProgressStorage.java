@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class WorkProgressStorage extends BasicSqlStorage<WorkProgress, Integer> {
+public class WorkProgressStorage extends BasicJpaStorage<WorkProgress, Integer> {
 
     @Autowired
     public WorkProgressStorage(final WorkProgressRepository repository) {

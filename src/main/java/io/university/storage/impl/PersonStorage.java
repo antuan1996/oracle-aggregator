@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class PersonStorage extends BasicSqlStorage<Person, Integer> {
+public class PersonStorage extends BasicJpaStorage<Person, Integer> {
 
     @Autowired
     public PersonStorage(final PersonRepository repository) {

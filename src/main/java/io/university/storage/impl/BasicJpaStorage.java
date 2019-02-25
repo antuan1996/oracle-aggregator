@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,14 +17,14 @@ import java.util.Optional;
  * @author GoodforGod
  * @since 16.02.2019
  */
-abstract class BasicSqlStorage<T, ID extends Serializable>
+abstract class BasicJpaStorage<T, ID extends Serializable>
         extends BasicStorageUtils<T, ID>
         implements IStorage<T, ID> {
 
-    final Logger logger = LoggerFactory.getLogger(BasicSqlStorage.class);
+    final Logger logger = LoggerFactory.getLogger(BasicJpaStorage.class);
     final JpaRepository<T, ID> repository;
 
-    BasicSqlStorage(JpaRepository<T, ID> repository) {
+    BasicJpaStorage(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
 
@@ -68,7 +69,7 @@ abstract class BasicSqlStorage<T, ID extends Serializable>
     }
 
     @Override
-    public List<T> save(List<T> t) {
+    public List<T> save(Collection<T> t) {
         try {
             return (isValid(t)) ? repository.saveAll(t) : Collections.emptyList();
         } catch (Exception e) {

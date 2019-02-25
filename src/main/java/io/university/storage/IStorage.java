@@ -1,6 +1,7 @@
 package io.university.storage;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public interface IStorage<T, ID extends Serializable> {
     List<T> findAll();
 
     Optional<T> save(T t);
-    List<T> save(List<T> t);
+    List<T> save(Collection<T> t);
 
     boolean delete(T t);
     boolean deleteById(ID id);

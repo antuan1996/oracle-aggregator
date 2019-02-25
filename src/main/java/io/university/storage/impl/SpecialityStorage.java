@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class SpecialityStorage extends BasicSqlStorage<Speciality, Integer> {
+public class SpecialityStorage extends BasicJpaStorage<Speciality, Integer> {
 
     @Autowired
     public SpecialityStorage(final SpecialityRepository repository) {

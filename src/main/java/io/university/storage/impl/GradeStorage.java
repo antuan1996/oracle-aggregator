@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class GradeStorage extends BasicSqlStorage<Grade, Integer> {
+public class GradeStorage extends BasicJpaStorage<Grade, Integer> {
 
     @Autowired
     public GradeStorage(final GradeRepository repository) {
