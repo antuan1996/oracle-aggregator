@@ -1,4 +1,4 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenInteger;
@@ -17,7 +17,9 @@ import java.sql.Time;
 @Entity
 public class Schedule {
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenTime
     private Time start_timestamp;

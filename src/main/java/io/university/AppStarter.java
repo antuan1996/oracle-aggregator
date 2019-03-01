@@ -2,8 +2,8 @@ package io.university;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * ! NO DESCRIPTION !
@@ -11,8 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author GoodforGod
  * @since 16.02.2019
  */
-@EnableScheduling
 @EnableJpaRepositories
+@ComponentScan
 @SpringBootApplication
 public class AppStarter {
     public static void main(String[] args) {

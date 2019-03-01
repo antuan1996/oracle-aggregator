@@ -1,8 +1,8 @@
 package io.university.service;
 
 import io.dummymaker.factory.impl.GenProduceFactory;
-import model.dao.Department;
-import model.dao.Person;
+import io.university.model.dao.Department;
+import io.university.model.dao.Person;
 
 import java.util.ArrayList;
 import java.util.List;

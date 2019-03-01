@@ -1,6 +1,6 @@
 package io.university.repository;
 
-import model.dao.Schedule;
+import io.university.model.dao.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

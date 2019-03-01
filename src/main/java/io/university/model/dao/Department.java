@@ -1,13 +1,10 @@
-package model.dao;
+package io.university.model.dao;
 
 
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.simple.string.GenCompany;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -20,22 +17,23 @@ import java.util.List;
 public class Department {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @GenCompany
     private String name;
-    private int sub_department_id;
+
+    private Integer sub_department_id;
 
     @GenList
-    @OneToMany(mappedBy = "department")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private List<WorkProgress> workProgresses;
 
     @GenList
     @OneToMany(mappedBy = "department")
     private List<StudyProgress> studyProgresses;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

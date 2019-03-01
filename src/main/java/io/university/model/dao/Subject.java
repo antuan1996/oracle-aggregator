@@ -1,4 +1,4 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.complex.GenTime;
@@ -21,7 +21,9 @@ import java.util.List;
 @Entity
 public class Subject {
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenInteger
     private int code;
@@ -34,13 +36,15 @@ public class Subject {
     @GenTime
     private Timestamp end_timestamp;
 
-    @OneToOne(mappedBy = "subject") private Schedule schedule;
+    @OneToOne(mappedBy = "subject")
+    private Schedule schedule;
     @GenList(value = EmbeddedGenerator.class, depth = 5)
-    @OneToMany(mappedBy = "subject") private List<Grade> grades;
+    @OneToMany(mappedBy = "subject")
+    private List<Grade> grades;
 
     @GenEmbedded(depth = 5)
     @ManyToOne
-    @JoinColumn(name="speciality_id")
+    @JoinColumn(name = "speciality_id")
     private Speciality speciality;
 
     public int getId() {

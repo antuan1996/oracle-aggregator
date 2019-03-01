@@ -1,7 +1,7 @@
 package io.university.storage.impl;
 
+import io.university.model.dao.Person;
 import io.university.repository.PersonRepository;
-import model.dao.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

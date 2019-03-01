@@ -1,7 +1,7 @@
 package io.university.storage.impl;
 
+import io.university.model.dao.Department;
 import io.university.repository.DepartmentRepository;
-import model.dao.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class DepartmentStorage extends BasicJpaStorage<Department, Integer> {
+public class DepartmentStorage extends BasicJpaStorage<Department, Long> {
 
     @Autowired
     public DepartmentStorage(final DepartmentRepository repository) {

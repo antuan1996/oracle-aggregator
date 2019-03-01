@@ -1,6 +1,6 @@
 package io.university.repository;
 
-import model.dao.WorkProgress;
+import io.university.model.dao.WorkProgress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

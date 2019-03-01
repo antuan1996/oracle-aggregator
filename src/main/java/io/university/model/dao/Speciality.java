@@ -1,14 +1,11 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.simple.number.GenInteger;
 import io.dummymaker.annotation.simple.string.GenCompany;
 import io.dummymaker.annotation.simple.string.GenNick;
 import io.dummymaker.annotation.simple.string.GenNoun;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -20,7 +17,9 @@ import java.util.List;
 @Entity
 public class Speciality {
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenInteger
     private int code;
@@ -31,9 +30,10 @@ public class Speciality {
     @GenCompany
     private String qualification;
 
-    @OneToMany(mappedBy = "speciality") private List<Subject> subjects;
-
     @OneToMany(mappedBy = "speciality")
+    private List<Subject> subjects;
+
+    @OneToOne(mappedBy = "speciality")
     private StudyProgress studyProgress;
 
     public int getId() {

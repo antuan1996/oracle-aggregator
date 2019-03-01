@@ -1,14 +1,11 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenName;
 import io.dummymaker.annotation.special.GenEmbedded;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -25,7 +22,9 @@ public class Person {
         TEACHER
     }
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenName
     private String name;
@@ -40,11 +39,14 @@ public class Person {
     private PersonType type;
 
     @GenEmbedded
-    @OneToOne(mappedBy = "person") private WorkProgress workProgress;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private WorkProgress workProgress;
     @GenEmbedded
-    @OneToOne(mappedBy = "person") private StudyProgress studyProgress;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private StudyProgress studyProgress;
     @GenEmbedded
-    @OneToOne(mappedBy = "person") private Schedule schedule;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Schedule schedule;
 
     public int getId() {
         return id;

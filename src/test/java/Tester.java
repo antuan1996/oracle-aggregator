@@ -1,5 +1,5 @@
+import io.university.model.dao.Department;
 import io.university.service.DepartmentFactory;
-import model.dao.Department;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package io.university.storage.impl;
 
+import io.university.model.dao.Grade;
 import io.university.repository.GradeRepository;
-import model.dao.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

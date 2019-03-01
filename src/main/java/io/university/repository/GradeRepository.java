@@ -1,6 +1,6 @@
 package io.university.repository;
 
-import model.dao.Grade;
+import io.university.model.dao.Grade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

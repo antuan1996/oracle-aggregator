@@ -1,7 +1,7 @@
 package io.university.storage.impl;
 
+import io.university.model.dao.WorkProgress;
 import io.university.repository.WorkProgressRepository;
-import model.dao.WorkProgress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

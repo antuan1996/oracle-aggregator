@@ -1,4 +1,4 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenShort;
@@ -15,7 +15,9 @@ import java.sql.Timestamp;
 @Entity
 public class StudyProgress {
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenShort
     private short course;
@@ -27,7 +29,7 @@ public class StudyProgress {
     private Timestamp graduate_timestamp;
 
     @ManyToOne
-    @JoinColumn(name="department_id")
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @OneToOne

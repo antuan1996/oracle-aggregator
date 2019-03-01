@@ -1,4 +1,4 @@
-package model.dao;
+package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenChar;
@@ -16,7 +16,9 @@ import java.sql.Timestamp;
 @Entity
 public class Grade {
 
-    @Id @GeneratedValue private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @GenInteger
     private int value;
