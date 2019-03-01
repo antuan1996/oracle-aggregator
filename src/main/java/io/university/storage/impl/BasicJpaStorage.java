@@ -31,20 +31,20 @@ abstract class BasicJpaStorage<T, ID extends Serializable>
     @Override
     public boolean exist(ID id) {
         try {
-            return (isIdValid(id)) && repository.existsById(id);
+            return isIdValid(id) && repository.existsById(id);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return false;
         }
     }
 
     @Override
     public Optional<T> find(ID id) {
         try {
-            return (isIdValid(id)) ? repository.findById(id) : Optional.empty();
+            return isIdValid(id) ? repository.findById(id) : Optional.empty();
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return Optional.empty();
         }
     }
 
@@ -54,27 +54,27 @@ abstract class BasicJpaStorage<T, ID extends Serializable>
             return repository.findAll();
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return Collections.emptyList();
         }
     }
 
     @Override
     public Optional<T> save(T t) {
         try {
-            return (isValid(t)) ? Optional.ofNullable(repository.save(t)) : Optional.empty();
+            return isValid(t) ? Optional.ofNullable(repository.save(t)) : Optional.empty();
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return Optional.empty();
         }
     }
 
     @Override
     public List<T> save(Collection<T> t) {
         try {
-            return (isValid(t)) ? repository.saveAll(t) : Collections.emptyList();
+            return isValid(t) ? repository.saveAll(t) : Collections.emptyList();
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return Collections.emptyList();
         }
     }
 
@@ -88,7 +88,7 @@ abstract class BasicJpaStorage<T, ID extends Serializable>
             return true;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return false;
         }
     }
 
@@ -102,7 +102,7 @@ abstract class BasicJpaStorage<T, ID extends Serializable>
             return true;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            throw e;
+            return false;
         }
     }
 }
