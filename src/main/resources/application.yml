@@ -4,9 +4,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
   datasource:
     url: jdbc:oracle:thin:@localhost:32769:ORCLCDB
     username: sys as sysdba
     password: Oradoc_db1
     driver-class-name: oracle.jdbc.driver.OracleDriver
     platform: org.hibernate.dialect.Oracle10gDialect
+

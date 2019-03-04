@@ -13,41 +13,40 @@ import java.sql.Timestamp;
  * @since 16.02.2019
  */
 @Entity
-public class WorkProgress {
+@Table(schema = "sys")
+public class WorkHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @GenTime
-    private Timestamp start_timestamp;
+    private Timestamp startTimestamp;
+
     @GenTime
-    private Timestamp end_timestamp;
+    private Timestamp endTimestamp;
+
     @GenNick
     private String position;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_uid")
     private Department department;
 
     @OneToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_uid")
     private Person person;
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 
     public int getId() {
         return id;
     }
 
-    public Timestamp getStart_timestamp() {
-        return start_timestamp;
+    public Timestamp getStartTimestamp() {
+        return startTimestamp;
     }
 
-    public Timestamp getEnd_timestamp() {
-        return end_timestamp;
+    public Timestamp getEndTimestamp() {
+        return endTimestamp;
     }
 
     public String getPosition() {
@@ -58,7 +57,15 @@ public class WorkProgress {
         return department;
     }
 
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public Person getPerson() {
         return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

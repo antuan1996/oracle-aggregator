@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class DepartmentStorage extends BasicJpaStorage<Department, Long> {
+public class DepartmentStorage extends BasicJpaStorage<Department, Integer> {
 
     @Autowired
     public DepartmentStorage(final DepartmentRepository repository) {

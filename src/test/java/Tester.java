@@ -1,5 +1,3 @@
-import io.university.model.dao.Department;
-import io.university.service.DepartmentFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,8 +11,6 @@ public class Tester extends Assert {
 
     @Test
     public void test() {
-        DepartmentFactory factory = new DepartmentFactory();
-        Department department = factory.build();
-        assertNotNull(department);
+
     }
 }

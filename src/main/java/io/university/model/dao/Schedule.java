@@ -3,10 +3,12 @@ package io.university.model.dao;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenInteger;
 import io.dummymaker.annotation.simple.number.GenShort;
-import io.dummymaker.annotation.special.GenEmbedded;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ! NO DESCRIPTION !
@@ -15,55 +17,91 @@ import java.sql.Time;
  * @since 16.02.2019
  */
 @Entity
-public class Schedule {
+@Table(schema = "sys")
+public class Schedule implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @GenTime
-    private Time start_timestamp;
+    private Timestamp startTimestamp;
     @GenTime
-    private Time end_timestamp;
+    private Timestamp endTimestamp;
     @GenShort
     private String audience;
     @GenInteger
-    private int campus_id;
+    private Integer campusId;
 
-    @OneToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
+    @ManyToMany(mappedBy = "schedules", cascade = CascadeType.ALL)
+    private Set<Person> people = new HashSet<>();
 
-    @GenEmbedded(depth = 5)
-    @OneToOne
-    @JoinColumn(name = "subject_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subject_uid")
     private Subject subject;
 
     public int getId() {
         return id;
     }
 
-    public Time getStart_timestamp() {
-        return start_timestamp;
+    public Timestamp getStartTimestamp() {
+        return startTimestamp;
     }
 
-    public Time getEnd_timestamp() {
-        return end_timestamp;
+    public Timestamp getEndTimestamp() {
+        return endTimestamp;
     }
 
     public String getAudience() {
         return audience;
     }
 
-    public int getCampus_id() {
-        return campus_id;
+    public int getCampusId() {
+        return campusId;
     }
 
-    public Person getPerson() {
+    public Set<Person> getPeople() {
+        return people;
+    }
+
+    public Person addPerson(Person person) {
+        this.people.add(person);
         return person;
     }
 
     public Subject getSubject() {
         return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Schedule schedule = (Schedule) o;
+
+        if (id != schedule.id) return false;
+        if (startTimestamp != null ? !startTimestamp.equals(schedule.startTimestamp) : schedule.startTimestamp != null)
+            return false;
+        if (endTimestamp != null ? !endTimestamp.equals(schedule.endTimestamp) : schedule.endTimestamp != null)
+            return false;
+        if (audience != null ? !audience.equals(schedule.audience) : schedule.audience != null) return false;
+        if (campusId != null ? !campusId.equals(schedule.campusId) : schedule.campusId != null) return false;
+        return subject != null ? subject.equals(schedule.subject) : schedule.subject == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+        result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
+        result = 31 * result + (audience != null ? audience.hashCode() : 0);
+        result = 31 * result + (campusId != null ? campusId.hashCode() : 0);
+        result = 31 * result + (subject != null ? subject.hashCode() : 0);
+        return result;
     }
 }

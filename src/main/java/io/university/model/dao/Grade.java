@@ -5,6 +5,7 @@ import io.dummymaker.annotation.simple.number.GenChar;
 import io.dummymaker.annotation.simple.number.GenInteger;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -14,40 +15,47 @@ import java.sql.Timestamp;
  * @since 16.02.2019
  */
 @Entity
-public class Grade {
+@Table(schema = "sys")
+public class Grade implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @GenInteger
-    private int value;
-    @GenChar
-    private char latin_value;
-    @GenTime
-    private Timestamp date;
+    private int numValue;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_id")
+    @GenChar
+    private char latinValue;
+
+    @GenTime
+    private Timestamp gradeTimestamp;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subject_uid")
     private Subject subject;
 
     public int getId() {
         return id;
     }
 
-    public int getValue() {
-        return value;
+    public int getNumValue() {
+        return numValue;
     }
 
-    public char getLatin_value() {
-        return latin_value;
+    public char getLatinValue() {
+        return latinValue;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getGradeTimestamp() {
+        return gradeTimestamp;
     }
 
     public Subject getSubject() {
         return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

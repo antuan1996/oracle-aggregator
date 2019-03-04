@@ -6,7 +6,10 @@ import io.dummymaker.annotation.simple.string.GenName;
 import io.dummymaker.annotation.special.GenEmbedded;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ! NO DESCRIPTION !
@@ -15,7 +18,8 @@ import java.sql.Timestamp;
  * @since 16.02.2019
  */
 @Entity
-public class Person {
+@Table(schema = "sys")
+public class Person implements Serializable {
 
     public enum PersonType {
         STUDENT,
@@ -23,30 +27,40 @@ public class Person {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @GenName
     private String name;
+
     @GenName
-    private String middle_name;
+    private String middleName;
+
     @GenName
     private String surname;
+
     @GenTime
-    private Timestamp birth_timestamp;
+    private Timestamp birthTimestamp;
+
     @GenCity
-    private String birth_place;
+    private String birthPlace;
     private PersonType type;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "schedule_mapper",
+            joinColumns = { @JoinColumn(name = "person_id") },
+            inverseJoinColumns = { @JoinColumn(name = "schedule_id") }
+    )
+    private Set<Schedule> schedules = new HashSet<>();
 
     @GenEmbedded
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private WorkProgress workProgress;
+    private WorkHistory workHistory;
+
     @GenEmbedded
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private StudyProgress studyProgress;
-    @GenEmbedded
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    private Schedule schedule;
+    private Study study;
 
     public int getId() {
         return id;
@@ -56,35 +70,73 @@ public class Person {
         return name;
     }
 
-    public String getMiddle_name() {
-        return middle_name;
+    public String getMiddleName() {
+        return middleName;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public Timestamp getBirth_timestamp() {
-        return birth_timestamp;
+    public Timestamp getBirthTimestamp() {
+        return birthTimestamp;
     }
 
-    public String getBirth_place() {
-        return birth_place;
+    public String getBirthPlace() {
+        return birthPlace;
+    }
+
+    public Study getStudy() {
+        return study;
     }
 
     public PersonType getType() {
         return type;
     }
 
-    public WorkProgress getWorkProgress() {
-        return workProgress;
+    public WorkHistory getWorkHistory() {
+        return workHistory;
     }
 
-    public StudyProgress getStudyProgress() {
-        return studyProgress;
+    public Set<Schedule> getSchedules() {
+        return schedules;
     }
 
-    public Schedule getSchedule() {
+    public Schedule addSchedule(Schedule schedule) {
+        this.schedules.add(schedule);
         return schedule;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (id != person.id) return false;
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        if (middleName != null ? !middleName.equals(person.middleName) : person.middleName != null) return false;
+        if (surname != null ? !surname.equals(person.surname) : person.surname != null) return false;
+        if (birthTimestamp != null ? !birthTimestamp.equals(person.birthTimestamp) : person.birthTimestamp != null)
+            return false;
+        if (birthPlace != null ? !birthPlace.equals(person.birthPlace) : person.birthPlace != null) return false;
+        if (type != person.type) return false;
+        if (workHistory != null ? !workHistory.equals(person.workHistory) : person.workHistory != null) return false;
+        return study != null ? study.equals(person.study) : person.study == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (birthTimestamp != null ? birthTimestamp.hashCode() : 0);
+        result = 31 * result + (birthPlace != null ? birthPlace.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (workHistory != null ? workHistory.hashCode() : 0);
+        result = 31 * result + (study != null ? study.hashCode() : 0);
+        return result;
     }
 }

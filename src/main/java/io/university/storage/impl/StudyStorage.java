@@ -1,7 +1,7 @@
 package io.university.storage.impl;
 
-import io.university.model.dao.StudyProgress;
-import io.university.repository.StudyProgressRepository;
+import io.university.model.dao.Study;
+import io.university.repository.StudyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class StudyProgressStorage extends BasicJpaStorage<StudyProgress, Integer> {
+public class StudyStorage extends BasicJpaStorage<Study, Integer> {
 
     @Autowired
-    public StudyProgressStorage(final StudyProgressRepository repository) {
+    public StudyStorage(final StudyRepository repository) {
         super(repository);
     }
 }

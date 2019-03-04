@@ -1,10 +1,11 @@
 package io.university.model.dao;
 
 
-import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.simple.string.GenCompany;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,26 +15,25 @@ import java.util.List;
  * @since 16.02.2019
  */
 @Entity
-public class Department {
+@Table(schema = "sys")
+public class Department implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue
+    private int id;
 
     @GenCompany
     private String name;
 
-    private Integer sub_department_id;
+    private Integer subDepartmentId;
 
-    @GenList
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
-    private List<WorkProgress> workProgresses;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<WorkHistory> workHistories = new ArrayList<>();
 
-    @GenList
-    @OneToMany(mappedBy = "department")
-    private List<StudyProgress> studyProgresses;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Study> studies = new ArrayList<>();
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -41,15 +41,25 @@ public class Department {
         return name;
     }
 
-    public int getSub_department_id() {
-        return sub_department_id;
+    public int getSubDepartmentId() {
+        return subDepartmentId;
     }
 
-    public List<WorkProgress> getWorkProgresses() {
-        return workProgresses;
+    public WorkHistory addWorkHistory(WorkHistory workHistory) {
+        this.workHistories.add(workHistory);
+        return workHistory;
     }
 
-    public List<StudyProgress> getStudyProgresses() {
-        return studyProgresses;
+    public Study addStudy(Study study) {
+        this.studies.add(study);
+        return study;
+    }
+
+    public List<WorkHistory> getWorkHistories() {
+        return workHistories;
+    }
+
+    public List<Study> getStudies() {
+        return studies;
     }
 }
