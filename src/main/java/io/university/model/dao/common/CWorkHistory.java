@@ -1,4 +1,4 @@
-package io.university.model.dao;
+package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.string.GenNick;
@@ -11,11 +11,11 @@ import java.sql.Timestamp;
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 16.02.2019
+ * @since 05.03.2019
  */
 @Entity
 @Table(schema = "sys")
-public class WorkHistory implements Serializable {
+public class CWorkHistory implements Serializable {
 
     @Id
     @GeneratedValue
@@ -32,11 +32,11 @@ public class WorkHistory implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_uid")
-    private Department department;
+    private CDepartment department;
 
     @OneToOne
     @JoinColumn(name = "person_uid")
-    private Person person;
+    private CPerson person;
 
     public int getId() {
         return id;
@@ -54,19 +54,19 @@ public class WorkHistory implements Serializable {
         return position;
     }
 
-    public Department getDepartment() {
+    public CDepartment getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(CDepartment department) {
         this.department = department;
     }
 
-    public Person getPerson() {
+    public CPerson getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(CPerson person) {
         this.person = person;
     }
 }

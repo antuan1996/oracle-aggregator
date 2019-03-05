@@ -1,6 +1,6 @@
-package io.university.repository;
+package io.university.repository.common;
 
-import io.university.model.dao.WorkHistory;
+import io.university.model.dao.common.CGrade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 16.02.2019
  */
 @Repository
-public interface WorkRepository extends JpaRepository<WorkHistory, Integer> {
+public interface CGradeRepository extends JpaRepository<CGrade, Integer> {
 
 }

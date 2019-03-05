@@ -1,4 +1,4 @@
-package io.university.model.dao;
+package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.complex.GenTime;
@@ -18,11 +18,11 @@ import java.util.List;
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 16.02.2019
+ * @since 05.03.2019
  */
 @Entity
 @Table(schema = "sys")
-public class Subject implements Serializable {
+public class CSubject implements Serializable {
 
     @Id
     @GeneratedValue
@@ -45,21 +45,21 @@ public class Subject implements Serializable {
 
     @GenEmbedded(depth = 7)
     @OneToOne(mappedBy = "subject")
-    private Schedule schedule;
+    private CSchedule schedule;
 
     @GenList(value = EmbeddedGenerator.class, depth = 7)
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<Grade> grades = new ArrayList<>();
+    private List<CGrade> grades = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "speciality_uid")
-    private Speciality speciality;
+    private CSpeciality speciality;
 
-    public Speciality getSpeciality() {
+    public CSpeciality getSpeciality() {
         return speciality;
     }
 
-    public void setSpeciality(Speciality speciality) {
+    public void setSpeciality(CSpeciality speciality) {
         this.speciality = speciality;
     }
 
@@ -91,21 +91,20 @@ public class Subject implements Serializable {
         return endTimestamp;
     }
 
-    public Schedule getSchedule() {
+    public CSchedule getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Schedule schedule) {
+    public void setSchedule(CSchedule schedule) {
         this.schedule = schedule;
     }
 
-    public List<Grade> getGrades() {
+    public List<CGrade> getGrades() {
         return grades;
     }
 
-    public Grade addGrade(Grade grade) {
+    public CGrade addGrade(CGrade grade) {
         this.grades.add(grade);
         return grade;
     }
 }
-

@@ -1,7 +1,8 @@
-package io.university.service;
+package io.university.service.impl;
 
 import io.dummymaker.factory.impl.GenProduceFactory;
 import io.university.model.dao.*;
+import io.university.service.IFactory;
 import io.university.storage.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,21 +18,29 @@ import java.util.List;
 @Component
 public class PeopleFactory implements IFactory<Person> {
 
-    @Autowired
-    private DepartmentStorage departmentStorage;
-    @Autowired
-    private SubjectStorage subjectStorage;
-    @Autowired
-    private SpecialityStorage specialityStorage;
-    @Autowired
-    private PersonStorage personStorage;
-    @Autowired
-    private ScheduleStorage scheduleStorage;
+    private final DepartmentStorage departmentStorage;
+    private final SpecialityStorage specialityStorage;
+    private final ScheduleStorage scheduleStorage;
+    private final SubjectStorage subjectStorage;
+    private final PersonStorage personStorage;
 
     private final GenProduceFactory factory = new GenProduceFactory();
 
     private static final int DEPARTMENT_RATIO = 100;
     private static final int SPECIALITY_RATIO = 30;
+
+    @Autowired
+    public PeopleFactory(DepartmentStorage departmentStorage,
+                         SubjectStorage subjectStorage,
+                         SpecialityStorage specialityStorage,
+                         PersonStorage personStorage,
+                         ScheduleStorage scheduleStorage) {
+        this.departmentStorage = departmentStorage;
+        this.subjectStorage = subjectStorage;
+        this.specialityStorage = specialityStorage;
+        this.personStorage = personStorage;
+        this.scheduleStorage = scheduleStorage;
+    }
 
     @Override
     public Person build() {

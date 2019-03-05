@@ -17,14 +17,14 @@ import java.util.Optional;
  * @author GoodforGod
  * @since 16.02.2019
  */
-abstract class BasicJpaStorage<T, ID extends Serializable>
+public abstract class BasicJpaStorage<T, ID extends Serializable>
         extends BasicStorageUtils<T, ID>
         implements IStorage<T, ID> {
 
     final Logger logger = LoggerFactory.getLogger(BasicJpaStorage.class);
     final JpaRepository<T, ID> repository;
 
-    BasicJpaStorage(JpaRepository<T, ID> repository) {
+    public BasicJpaStorage(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
 
