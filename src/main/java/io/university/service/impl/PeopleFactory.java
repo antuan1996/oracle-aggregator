@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * ! NO DESCRIPTION !
@@ -53,18 +54,20 @@ public class PeopleFactory implements IFactory<Person> {
         final int specNum = (n < SPECIALITY_RATIO) ? 1 : n / SPECIALITY_RATIO;
 
         final List<Department> departments = factory.produce(Department.class, depNum);
+        final List<Speciality> specialities = factory.produce(Speciality.class, specNum);
+        final List<Person> people = factory.produce(Person.class, n);
+
+        specialities.forEach(s -> s.getSubjects().forEach(subject -> {
+            subject.setSpeciality(s);
+            subject.getGrades().forEach(g -> {
+                final Person person = people.get(ThreadLocalRandom.current().nextInt(0, people.size() - 1));
+                g.setSubject(subject);
+                person.addGrade(g);
+            });
+        }));
+        specialityStorage.save(specialities);
         departmentStorage.save(departments);
 
-        final List<Speciality> specialities = factory.produce(Speciality.class, specNum);
-        specialities.forEach(s -> {
-            s.getSubjects().forEach(subject -> {
-                subject.setSpeciality(s);
-                subject.getGrades().forEach(g -> g.setSubject(subject));
-            });
-        });
-        specialityStorage.save(specialities);
-
-        final List<Person> people = factory.produce(Person.class, n);
         for (int i = 0; i < people.size(); i++) {
             final Person p = people.get(i);
             final Speciality speciality = specialities.get(i / SPECIALITY_RATIO);
@@ -84,7 +87,6 @@ public class PeopleFactory implements IFactory<Person> {
         final List<Schedule> schedules = factory.produce(Schedule.class, subjects.size());
         for (int i = 0; i < subjects.size(); i++) {
             subjects.get(i).setSchedule(schedules.get(i));
-            schedules.get(i).setSubject(subjects.get(i));
         }
 
         for (int i = 0; i < people.size(); i++) {
@@ -92,8 +94,8 @@ public class PeopleFactory implements IFactory<Person> {
             final Speciality speciality = specialities.get(i / SPECIALITY_RATIO);
             speciality.getSubjects().forEach(s -> p.addSchedule(s.getSchedule()));
         }
-
         scheduleStorage.save(schedules);
+        personStorage.save(people);
 
         return people;
     }

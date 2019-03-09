@@ -30,7 +30,7 @@ public class PeopleController {
 
     @GetMapping("/fill")
     public List<Person> fillDepartmentWithPeople() {
-        factory.build(ThreadLocalRandom.current().nextInt(3, 5));
+        factory.build(ThreadLocalRandom.current().nextInt(2, 4));
         return Collections.emptyList();
     }
 }

@@ -1,7 +1,7 @@
 package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenChar;
+import io.dummymaker.annotation.simple.number.GenCharacter;
 import io.dummymaker.annotation.simple.number.GenInteger;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class CGrade implements Serializable {
     @GenInteger
     private int numValue;
 
-    @GenChar
+    @GenCharacter
     private char latinValue;
 
     @GenTime

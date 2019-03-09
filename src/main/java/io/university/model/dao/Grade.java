@@ -1,8 +1,8 @@
 package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenChar;
-import io.dummymaker.annotation.simple.number.GenInteger;
+import io.dummymaker.annotation.simple.number.GenCharacter;
+import io.dummymaker.annotation.simple.number.GenUShort;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,10 +22,10 @@ public class Grade implements Serializable {
     @GeneratedValue
     private int id;
 
-    @GenInteger
+    @GenUShort
     private int numValue;
 
-    @GenChar
+    @GenCharacter
     private char latinValue;
 
     @GenTime
@@ -34,6 +34,10 @@ public class Grade implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_uid")
     private Subject subject;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_uid")
+    private Person person;
 
     public int getId() {
         return id;
@@ -57,5 +61,35 @@ public class Grade implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Grade grade = (Grade) o;
+
+        if (id != grade.id) return false;
+        if (numValue != grade.numValue) return false;
+        if (latinValue != grade.latinValue) return false;
+        return gradeTimestamp != null ? gradeTimestamp.equals(grade.gradeTimestamp) : grade.gradeTimestamp == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + numValue;
+        result = 31 * result + (int) latinValue;
+        result = 31 * result + (gradeTimestamp != null ? gradeTimestamp.hashCode() : 0);
+        return result;
     }
 }

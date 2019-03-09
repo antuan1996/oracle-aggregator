@@ -1,7 +1,7 @@
 package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenShort;
+import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.annotation.simple.string.GenHexNumber;
 
 import javax.persistence.*;
@@ -25,7 +25,7 @@ public class Study implements Serializable {
     @GenHexNumber
     private String course;
 
-    @GenShort
+    @GenUShort
     private String groupNum;
 
     @GenTime

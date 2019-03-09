@@ -2,9 +2,9 @@ package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenInteger;
-import io.dummymaker.annotation.simple.number.GenShort;
-import io.dummymaker.annotation.simple.string.GenNoun;
+import io.dummymaker.annotation.simple.number.GenUByte;
+import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.string.GenCountry;
 import io.dummymaker.annotation.special.GenEmbedded;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 
@@ -28,13 +28,13 @@ public class Subject implements Serializable {
     @GeneratedValue
     private int id;
 
-    @GenInteger
+    @GenUInteger
     private int code;
 
-    @GenNoun
+    @GenCountry
     private String name;
 
-    @GenShort
+    @GenUByte
     private String semester;
 
     @GenTime
@@ -97,6 +97,7 @@ public class Subject implements Serializable {
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
+        schedule.setSubject(this);
     }
 
     public List<Grade> getGrades() {

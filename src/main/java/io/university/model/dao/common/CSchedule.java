@@ -1,8 +1,8 @@
 package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenInteger;
-import io.dummymaker.annotation.simple.number.GenShort;
+import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.number.GenUShort;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,11 +26,14 @@ public class CSchedule implements Serializable {
 
     @GenTime
     private Timestamp startTimestamp;
+
     @GenTime
     private Timestamp endTimestamp;
-    @GenShort
+
+    @GenUShort
     private String audience;
-    @GenInteger
+
+    @GenUInteger
     private Integer campusId;
 
     @ManyToMany(mappedBy = "schedules", cascade = CascadeType.ALL)

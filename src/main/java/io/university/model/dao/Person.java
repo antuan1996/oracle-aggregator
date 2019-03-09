@@ -1,8 +1,10 @@
 package io.university.model.dao;
 
+import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenName;
+import io.dummymaker.annotation.simple.string.GenSurname;
 import io.dummymaker.annotation.special.GenEmbedded;
 
 import javax.persistence.*;
@@ -36,7 +38,7 @@ public class Person implements Serializable {
     @GenName
     private String middleName;
 
-    @GenName
+    @GenSurname
     private String surname;
 
     @GenTime
@@ -44,6 +46,8 @@ public class Person implements Serializable {
 
     @GenCity
     private String birthPlace;
+
+    @GenEnum
     private PersonType type;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -53,6 +57,9 @@ public class Person implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "schedule_id") }
     )
     private Set<Schedule> schedules = new HashSet<>();
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<Grade> grades = new HashSet<>();
 
     @GenEmbedded
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
@@ -105,6 +112,16 @@ public class Person implements Serializable {
     public Schedule addSchedule(Schedule schedule) {
         this.schedules.add(schedule);
         return schedule;
+    }
+
+    public Set<Grade> getGrades() {
+        return grades;
+    }
+
+    public Grade addGrade(Grade grade) {
+        this.grades.add(grade);
+        grade.setPerson(this);
+        return grade;
     }
 
     @Override

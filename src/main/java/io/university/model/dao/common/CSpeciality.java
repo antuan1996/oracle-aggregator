@@ -1,7 +1,7 @@
 package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenList;
-import io.dummymaker.annotation.simple.number.GenInteger;
+import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCompany;
 import io.dummymaker.annotation.simple.string.GenNick;
 import io.dummymaker.annotation.simple.string.GenNoun;
@@ -26,7 +26,7 @@ public class CSpeciality implements Serializable {
     @GeneratedValue
     private int id;
 
-    @GenInteger
+    @GenUInteger
     private int code;
 
     @GenNick

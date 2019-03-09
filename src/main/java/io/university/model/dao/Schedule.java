@@ -1,8 +1,8 @@
 package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenInteger;
 import io.dummymaker.annotation.simple.number.GenShort;
+import io.dummymaker.annotation.simple.number.GenUInteger;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,7 +30,7 @@ public class Schedule implements Serializable {
     private Timestamp endTimestamp;
     @GenShort
     private String audience;
-    @GenInteger
+    @GenUInteger
     private Integer campusId;
 
     @ManyToMany(mappedBy = "schedules", cascade = CascadeType.ALL)
@@ -75,6 +75,7 @@ public class Schedule implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+        subject.setSchedule(this);
     }
 
     @Override
