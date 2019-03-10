@@ -1,8 +1,8 @@
 package io.university.model.dao;
 
 import io.dummymaker.annotation.complex.GenTime;
-import io.dummymaker.annotation.simple.number.GenShort;
 import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.number.GenUShort;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,10 +26,13 @@ public class Schedule implements Serializable {
 
     @GenTime
     private Timestamp startTimestamp;
+
     @GenTime
     private Timestamp endTimestamp;
-    @GenShort
+
+    @GenUShort
     private String audience;
+
     @GenUInteger
     private Integer campusId;
 

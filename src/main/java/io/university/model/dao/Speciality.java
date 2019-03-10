@@ -1,9 +1,9 @@
 package io.university.model.dao;
 
+import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCompany;
-import io.dummymaker.annotation.simple.string.GenNick;
 import io.dummymaker.annotation.simple.string.GenNoun;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 
@@ -22,6 +22,11 @@ import java.util.List;
 @Table(schema = "sys")
 public class Speciality implements Serializable {
 
+    public enum SpecialityType {
+        BACHELOR,
+        MASTER
+    }
+
     @Id
     @GeneratedValue
     private int id;
@@ -29,8 +34,8 @@ public class Speciality implements Serializable {
     @GenUInteger
     private int code;
 
-    @GenNick
-    private String type;
+    @GenEnum
+    private SpecialityType type;
 
     @GenNoun
     private String course;
@@ -53,7 +58,7 @@ public class Speciality implements Serializable {
         return code;
     }
 
-    public String getType() {
+    public SpecialityType getType() {
         return type;
     }
 

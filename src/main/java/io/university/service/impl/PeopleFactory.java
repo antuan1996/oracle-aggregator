@@ -23,7 +23,7 @@ public class PeopleFactory implements IFactory<Person> {
     private final SpecialityStorage specialityStorage;
     private final ScheduleStorage scheduleStorage;
     private final SubjectStorage subjectStorage;
-    private final PersonStorage personStorage;
+    private final PersonStorage peopleStorage;
 
     private final GenProduceFactory factory = new GenProduceFactory();
 
@@ -34,12 +34,12 @@ public class PeopleFactory implements IFactory<Person> {
     public PeopleFactory(DepartmentStorage departmentStorage,
                          SubjectStorage subjectStorage,
                          SpecialityStorage specialityStorage,
-                         PersonStorage personStorage,
+                         PersonStorage peopleStorage,
                          ScheduleStorage scheduleStorage) {
         this.departmentStorage = departmentStorage;
         this.subjectStorage = subjectStorage;
         this.specialityStorage = specialityStorage;
-        this.personStorage = personStorage;
+        this.peopleStorage = peopleStorage;
         this.scheduleStorage = scheduleStorage;
     }
 
@@ -81,7 +81,7 @@ public class PeopleFactory implements IFactory<Person> {
             p.getWorkHistory().setDepartment(department);
 
         }
-        personStorage.save(people);
+        peopleStorage.save(people);
 
         final List<Subject> subjects = subjectStorage.findAll();
         final List<Schedule> schedules = factory.produce(Schedule.class, subjects.size());
@@ -95,7 +95,7 @@ public class PeopleFactory implements IFactory<Person> {
             speciality.getSubjects().forEach(s -> p.addSchedule(s.getSchedule()));
         }
         scheduleStorage.save(schedules);
-        personStorage.save(people);
+        peopleStorage.save(people);
 
         return people;
     }
