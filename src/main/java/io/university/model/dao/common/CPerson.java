@@ -78,6 +78,12 @@ public class CPerson implements Serializable {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<CGrade> grades = new HashSet<>();
 
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<CVisit> visits = new HashSet<>();
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private Set<CLiving> livings = new HashSet<>();
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "cconference_mapper",
@@ -85,6 +91,7 @@ public class CPerson implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "conference_id") }
     )
     private Set<CConference> conferences = new HashSet<>();
+
 
     public int getId() {
         return id;
@@ -175,6 +182,24 @@ public class CPerson implements Serializable {
         this.grades.add(grade);
         grade.setPerson(this);
         return grade;
+    }
+
+    public Set<CVisit> getVisits() {
+        return visits;
+    }
+
+    public CVisit addVisit(CVisit visit) {
+        this.visits.add(visit);
+        return visit;
+    }
+
+    public Set<CLiving> getLivings() {
+        return livings;
+    }
+
+    public CLiving addLiving(CLiving living) {
+        this.livings.add(living);
+        return living;
     }
 
     @Override

@@ -27,12 +27,14 @@ public class CPeopleFactory implements IFactory<CPerson> {
     private final CSubjectStorage subjectStorage;
     private final CPersonStorage peopleStorage;
     private final CEditionStorage editionStorage;
+    private final CCommunityStorage communityStorage;
 
     private static final int DEPARTMENT_RATIO = 100;
-    private static final int CONFERENCE_RATIO = 60;
+    private static final int CONFERENCE_RATIO = 40;
     private static final int EDITION_RATIO = 50;
     private static final int PROJECT_RATIO = 40;
     private static final int BOOKS_RATIO = 40;
+    private static final int COMMUNITY_RATIO = 30;
     private static final int SPECIALITY_RATIO = 30;
 
     @Autowired
@@ -41,12 +43,14 @@ public class CPeopleFactory implements IFactory<CPerson> {
                           CSpecialityStorage specialityStorage,
                           CPersonStorage peopleStorage,
                           CScheduleStorage scheduleStorage,
+                          CCommunityStorage communityStorage,
                           CEditionStorage editionStorage) {
         this.departmentStorage = departmentStorage;
         this.subjectStorage = subjectStorage;
         this.specialityStorage = specialityStorage;
         this.peopleStorage = peopleStorage;
         this.scheduleStorage = scheduleStorage;
+        this.communityStorage = communityStorage;
         this.editionStorage = editionStorage;
     }
 
@@ -63,6 +67,7 @@ public class CPeopleFactory implements IFactory<CPerson> {
         final int bookNum = (n < BOOKS_RATIO) ? 1 : n / BOOKS_RATIO;
         final int editNum = (n < EDITION_RATIO) ? 1 : n / EDITION_RATIO;
         final int confNum = (n < CONFERENCE_RATIO) ? 1 : n / CONFERENCE_RATIO;
+        final int commNum = (n < COMMUNITY_RATIO) ? 1 : n / COMMUNITY_RATIO;
 
         final List<CDepartment> departments = factory.produce(CDepartment.class, depNum);
         final List<CSpeciality> specialities = factory.produce(CSpeciality.class, specNum);
@@ -148,6 +153,28 @@ public class CPeopleFactory implements IFactory<CPerson> {
             }
         }
         editionStorage.save(editions);
+        peopleStorage.save(people);
+
+        final List<CCommunity> communities = factory.produce(CCommunity.class, commNum);
+        for (CCommunity community : communities) {
+            for (CRoom room : community.getRooms()) {
+                room.setCommunity(community);
+                for (CLiving living : room.getLivings()) {
+                    final CPerson person = randomPick(people);
+                    living.setPerson(person);
+                    living.setRoom(room);
+                    person.addLiving(living);
+                }
+            }
+
+            for (CVisit visit : community.getVisits()) {
+                final CPerson person = randomPick(people);
+                visit.setPerson(person);
+                visit.setCommunity(community);
+                person.addVisit(visit);
+            }
+        }
+        communityStorage.save(communities);
         peopleStorage.save(people);
 
         return people;
