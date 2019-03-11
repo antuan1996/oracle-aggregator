@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenCharacter;
 import io.dummymaker.annotation.simple.number.GenInteger;
@@ -35,6 +36,7 @@ public class CGrade implements Serializable {
     @JoinColumn(name = "subject_uid")
     private CSubject subject;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_uid")
     private CPerson person;

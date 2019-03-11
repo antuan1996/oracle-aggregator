@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 
@@ -31,6 +32,7 @@ public class CLiving {
     @GenUInteger
     private int invoiceCount;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_uid")
     private CPerson person;

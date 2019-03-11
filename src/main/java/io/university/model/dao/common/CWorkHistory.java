@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.string.GenNick;
 
@@ -34,6 +35,7 @@ public class CWorkHistory implements Serializable {
     @JoinColumn(name = "department_uid")
     private CDepartment department;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "person_uid")
     private CPerson person;

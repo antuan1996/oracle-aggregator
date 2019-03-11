@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUByte;
@@ -43,10 +44,12 @@ public class CSubject implements Serializable {
     @GenTime
     private Timestamp endTimestamp;
 
+    @JsonIgnore
     @GenEmbedded(depth = 7)
     @OneToOne(mappedBy = "subject")
     private CSchedule schedule;
 
+    @JsonIgnore
     @GenList(value = EmbeddedGenerator.class, depth = 7)
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<CGrade> grades = new ArrayList<>();

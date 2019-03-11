@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.annotation.simple.string.GenHexNumber;
@@ -34,6 +35,7 @@ public class CStudy implements Serializable {
     @GenTime
     private Timestamp graduateTimestamp;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "person_uid")
     private CPerson person;

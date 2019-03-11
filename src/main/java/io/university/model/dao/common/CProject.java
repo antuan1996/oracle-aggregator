@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.simple.string.GenNick;
 import io.dummymaker.annotation.simple.string.GenPhrase;
@@ -28,6 +29,7 @@ public class CProject {
     @GenPhrase
     private String description;
 
+    @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<CProjectParticipation> participations = new HashSet<>();

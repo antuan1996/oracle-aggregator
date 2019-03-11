@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenList;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCompany;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -38,10 +40,12 @@ public class CSpeciality implements Serializable {
     @GenCompany
     private String qualification;
 
+    @JsonIgnore
     @GenList(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "speciality", cascade = CascadeType.ALL)
     private List<CSubject> subjects = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(mappedBy = "speciality", cascade = CascadeType.ALL)
     private CStudy study;
 
@@ -76,5 +80,23 @@ public class CSpeciality implements Serializable {
 
     public CStudy getStudy() {
         return study;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CSpeciality that = (CSpeciality) o;
+        return id == that.id &&
+                code == that.code &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(course, that.course) &&
+                Objects.equals(qualification, that.qualification);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, code, type, course, qualification);
     }
 }

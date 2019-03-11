@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.simple.string.GenCompany;
 
 import javax.persistence.*;
@@ -24,11 +25,13 @@ public class CDepartment implements Serializable {
     @GenCompany
     private String name;
 
-    private Integer subDepartmentId;
+    private Integer parentDepartmentId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<CWorkHistory> workHistories = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<CStudy> studies = new ArrayList<>();
 
@@ -40,8 +43,8 @@ public class CDepartment implements Serializable {
         return name;
     }
 
-    public int getSubDepartmentId() {
-        return subDepartmentId;
+    public int getParentDepartmentId() {
+        return parentDepartmentId;
     }
 
     public CWorkHistory addWorkHistory(CWorkHistory workHistory) {

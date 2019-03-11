@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCity;
@@ -45,6 +46,7 @@ public class CCommunity {
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private Set<CRoom> rooms = new HashSet<>();
 
+    @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private Set<CVisit> visits = new HashSet<>();

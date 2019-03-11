@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.simple.number.GenUInteger;
@@ -47,6 +48,7 @@ public class CEdition {
     @GenCountry
     private String type;
 
+    @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenBoolean;
@@ -39,10 +40,12 @@ public class CRoom {
     @GenBoolean
     private Boolean haveInsects;
 
+    @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Set<CLiving> livings = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "community_uid")
     private CCommunity community;

@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.number.GenUShort;
@@ -36,6 +37,7 @@ public class CSchedule implements Serializable {
     @GenUInteger
     private Integer campusId;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "schedules", cascade = CascadeType.ALL)
     private Set<CPerson> people = new HashSet<>();
 

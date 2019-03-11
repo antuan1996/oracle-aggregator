@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenCompany;
@@ -39,6 +40,7 @@ public class CConference {
     @GenTime
     private Timestamp timestamp;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "conferences", cascade = CascadeType.ALL)
     private Set<CPerson> people = new HashSet<>();
 

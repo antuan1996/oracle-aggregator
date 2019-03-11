@@ -1,5 +1,6 @@
 package io.university.model.dao.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenUuid;
@@ -32,6 +33,7 @@ public class CBook {
     @GenTime
     private Timestamp publishTimestamp;
 
+    @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<CReading> readings;
