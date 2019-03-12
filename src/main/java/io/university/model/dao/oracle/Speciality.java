@@ -1,4 +1,4 @@
-package io.university.model.dao;
+package io.university.model.dao.oracle;
 
 import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenList;

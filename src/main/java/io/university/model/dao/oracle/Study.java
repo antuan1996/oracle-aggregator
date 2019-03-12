@@ -1,4 +1,4 @@
-package io.university.model.dao;
+package io.university.model.dao.oracle;
 
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUShort;

@@ -1,6 +1,6 @@
-package io.university.repository;
+package io.university.repository.oracle;
 
-import io.university.model.dao.Speciality;
+import io.university.model.dao.oracle.Study;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 16.02.2019
  */
 @Repository
-public interface SpecialityRepository extends JpaRepository<Speciality, Integer> {
+public interface StudyRepository extends JpaRepository<Study, Integer> {
 
 }

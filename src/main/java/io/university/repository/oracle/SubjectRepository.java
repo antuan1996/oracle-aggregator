@@ -1,6 +1,6 @@
-package io.university.repository;
+package io.university.repository.oracle;
 
-import io.university.model.dao.Subject;
+import io.university.model.dao.oracle.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

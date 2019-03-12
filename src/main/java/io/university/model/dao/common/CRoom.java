@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenBoolean;
+import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 
 import javax.persistence.*;
@@ -25,14 +27,14 @@ public class CRoom {
     @GeneratedValue
     private int id;
 
-    @GenUInteger
-    private int roomNumber;
+    @GenUShort
+    private String roomNumber;
+
+    @GenUByte
+    private Integer peopleCapacity;
 
     @GenUInteger
-    private int peopleCapacity;
-
-    @GenUInteger
-    private int peopleLiving;
+    private Integer peopleLiving;
 
     @GenTime
     private Timestamp desinfectionTimestamp;
@@ -54,15 +56,15 @@ public class CRoom {
         return id;
     }
 
-    public int getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public int getPeopleCapacity() {
+    public Integer getPeopleCapacity() {
         return peopleCapacity;
     }
 
-    public int getPeopleLiving() {
+    public Integer getPeopleLiving() {
         return peopleLiving;
     }
 
@@ -96,23 +98,24 @@ public class CRoom {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CRoom cRoom = (CRoom) o;
+        CRoom room = (CRoom) o;
 
-        if (id != cRoom.id) return false;
-        if (roomNumber != cRoom.roomNumber) return false;
-        if (peopleCapacity != cRoom.peopleCapacity) return false;
-        if (peopleLiving != cRoom.peopleLiving) return false;
-        if (desinfectionTimestamp != null ? !desinfectionTimestamp.equals(cRoom.desinfectionTimestamp) : cRoom.desinfectionTimestamp != null)
+        if (id != room.id) return false;
+        if (roomNumber != null ? !roomNumber.equals(room.roomNumber) : room.roomNumber != null) return false;
+        if (peopleCapacity != null ? !peopleCapacity.equals(room.peopleCapacity) : room.peopleCapacity != null)
             return false;
-        return haveInsects != null ? haveInsects.equals(cRoom.haveInsects) : cRoom.haveInsects == null;
+        if (peopleLiving != null ? !peopleLiving.equals(room.peopleLiving) : room.peopleLiving != null) return false;
+        if (desinfectionTimestamp != null ? !desinfectionTimestamp.equals(room.desinfectionTimestamp) : room.desinfectionTimestamp != null)
+            return false;
+        return haveInsects != null ? haveInsects.equals(room.haveInsects) : room.haveInsects == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + roomNumber;
-        result = 31 * result + peopleCapacity;
-        result = 31 * result + peopleLiving;
+        result = 31 * result + (roomNumber != null ? roomNumber.hashCode() : 0);
+        result = 31 * result + (peopleCapacity != null ? peopleCapacity.hashCode() : 0);
+        result = 31 * result + (peopleLiving != null ? peopleLiving.hashCode() : 0);
         result = 31 * result + (desinfectionTimestamp != null ? desinfectionTimestamp.hashCode() : 0);
         result = 31 * result + (haveInsects != null ? haveInsects.hashCode() : 0);
         return result;

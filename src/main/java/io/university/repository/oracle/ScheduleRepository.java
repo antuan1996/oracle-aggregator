@@ -1,6 +1,6 @@
-package io.university.repository;
+package io.university.repository.oracle;
 
-import io.university.model.dao.Department;
+import io.university.model.dao.oracle.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 16.02.2019
  */
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department, Integer> {
+public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
 }

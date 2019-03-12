@@ -102,7 +102,9 @@ public class CPeopleFactory implements IFactory<CPerson> {
         final List<CSubject> subjects = subjectStorage.findAll();
         final List<CSchedule> schedules = factory.produce(CSchedule.class, subjects.size());
         for (int i = 0; i < subjects.size(); i++) {
-            subjects.get(i).setSchedule(schedules.get(i));
+            final CSchedule schedule = schedules.get(i);
+            subjects.get(i).setSchedule(schedule);
+            schedule.setSubject(subjects.get(i));
         }
 
         for (int i = 0; i < people.size(); i++) {

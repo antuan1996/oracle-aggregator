@@ -1,7 +1,8 @@
-package io.university.storage.impl;
+package io.university.storage.impl.oracle;
 
-import io.university.model.dao.Grade;
-import io.university.repository.GradeRepository;
+import io.university.model.dao.oracle.Grade;
+import io.university.repository.oracle.GradeRepository;
+import io.university.storage.impl.BasicJpaStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

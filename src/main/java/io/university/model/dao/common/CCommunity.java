@@ -2,7 +2,8 @@ package io.university.model.dao.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
-import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.number.GenUByte;
+import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenCountry;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
@@ -24,11 +25,11 @@ public class CCommunity {
     @GeneratedValue
     private int id;
 
-    @GenUInteger
-    private int roomNumber;
+    @GenUShort
+    private Integer roomCount;
 
-    @GenUInteger
-    private int payRentPerPerson;
+    @GenUShort
+    private Integer payRentPerPerson;
 
     @GenCountry
     private String district;
@@ -36,11 +37,11 @@ public class CCommunity {
     @GenCity
     private String street;
 
-    @GenUInteger
-    private int houseNumber;
+    @GenUByte
+    private Integer houseNumber;
 
-    @GenUInteger
-    private int housingNumber;
+    @GenUByte
+    private Integer housingNumber;
 
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
@@ -55,11 +56,11 @@ public class CCommunity {
         return id;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public Integer getRoomCount() {
+        return roomCount;
     }
 
-    public int getPayRentPerPerson() {
+    public Integer getPayRentPerPerson() {
         return payRentPerPerson;
     }
 
@@ -71,11 +72,11 @@ public class CCommunity {
         return street;
     }
 
-    public int getHouseNumber() {
+    public Integer getHouseNumber() {
         return houseNumber;
     }
 
-    public int getHousingNumber() {
+    public Integer getHousingNumber() {
         return housingNumber;
     }
 
@@ -105,23 +106,24 @@ public class CCommunity {
         CCommunity that = (CCommunity) o;
 
         if (id != that.id) return false;
-        if (roomNumber != that.roomNumber) return false;
-        if (payRentPerPerson != that.payRentPerPerson) return false;
-        if (houseNumber != that.houseNumber) return false;
-        if (housingNumber != that.housingNumber) return false;
+        if (roomCount != null ? !roomCount.equals(that.roomCount) : that.roomCount != null) return false;
+        if (payRentPerPerson != null ? !payRentPerPerson.equals(that.payRentPerPerson) : that.payRentPerPerson != null)
+            return false;
         if (district != null ? !district.equals(that.district) : that.district != null) return false;
-        return street != null ? street.equals(that.street) : that.street == null;
+        if (street != null ? !street.equals(that.street) : that.street != null) return false;
+        if (houseNumber != null ? !houseNumber.equals(that.houseNumber) : that.houseNumber != null) return false;
+        return housingNumber != null ? housingNumber.equals(that.housingNumber) : that.housingNumber == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + roomNumber;
-        result = 31 * result + payRentPerPerson;
+        result = 31 * result + (roomCount != null ? roomCount.hashCode() : 0);
+        result = 31 * result + (payRentPerPerson != null ? payRentPerPerson.hashCode() : 0);
         result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + houseNumber;
-        result = 31 * result + housingNumber;
+        result = 31 * result + (houseNumber != null ? houseNumber.hashCode() : 0);
+        result = 31 * result + (housingNumber != null ? housingNumber.hashCode() : 0);
         return result;
     }
 }

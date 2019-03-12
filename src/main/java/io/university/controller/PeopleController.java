@@ -1,8 +1,8 @@
 package io.university.controller;
 
-import io.university.model.dao.Person;
+import io.university.model.dao.oracle.Person;
 import io.university.service.impl.PeopleFactory;
-import io.university.storage.impl.PersonStorage;
+import io.university.storage.impl.oracle.PersonStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,9 +1,9 @@
 package io.university.service.impl;
 
 import io.dummymaker.factory.impl.GenProduceFactory;
-import io.university.model.dao.*;
+import io.university.model.dao.oracle.*;
 import io.university.service.IFactory;
-import io.university.storage.impl.*;
+import io.university.storage.impl.oracle.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

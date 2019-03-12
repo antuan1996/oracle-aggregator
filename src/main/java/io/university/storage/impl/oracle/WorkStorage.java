@@ -1,7 +1,8 @@
-package io.university.storage.impl;
+package io.university.storage.impl.oracle;
 
-import io.university.model.dao.WorkHistory;
-import io.university.repository.WorkRepository;
+import io.university.model.dao.oracle.WorkHistory;
+import io.university.repository.oracle.WorkRepository;
+import io.university.storage.impl.BasicJpaStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

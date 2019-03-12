@@ -2,6 +2,8 @@ package io.university.model.dao.common;
 
 import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenTime;
+import io.dummymaker.annotation.simple.GenBoolean;
+import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenName;
 import io.dummymaker.annotation.simple.string.GenSurname;
@@ -30,7 +32,7 @@ public class CPerson implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenName
     private String name;
@@ -48,7 +50,13 @@ public class CPerson implements Serializable {
     private String birthPlace;
 
     @GenEnum
-    private CPersonType type;
+    private CPersonType personType;
+
+    @GenBoolean
+    private Boolean havePrivilage;
+
+    @GenUByte
+    private Integer citationIndex;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -96,6 +104,14 @@ public class CPerson implements Serializable {
         return id;
     }
 
+    public Boolean getHavePrivilage() {
+        return havePrivilage;
+    }
+
+    public Integer getCitationIndex() {
+        return citationIndex;
+    }
+
     public String getName() {
         return name;
     }
@@ -120,8 +136,12 @@ public class CPerson implements Serializable {
         return study;
     }
 
-    public CPersonType getType() {
-        return type;
+    public void setStudy(CStudy study) {
+        this.study = study;
+    }
+
+    public CPersonType getPersonType() {
+        return personType;
     }
 
     public CWorkHistory getWorkHistory() {
@@ -208,25 +228,30 @@ public class CPerson implements Serializable {
 
         CPerson cPerson = (CPerson) o;
 
-        if (id != cPerson.id) return false;
+        if (id != null ? !id.equals(cPerson.id) : cPerson.id != null) return false;
         if (name != null ? !name.equals(cPerson.name) : cPerson.name != null) return false;
         if (middleName != null ? !middleName.equals(cPerson.middleName) : cPerson.middleName != null) return false;
         if (surname != null ? !surname.equals(cPerson.surname) : cPerson.surname != null) return false;
         if (birthTimestamp != null ? !birthTimestamp.equals(cPerson.birthTimestamp) : cPerson.birthTimestamp != null)
             return false;
         if (birthPlace != null ? !birthPlace.equals(cPerson.birthPlace) : cPerson.birthPlace != null) return false;
-        return type == cPerson.type;
+        if (personType != cPerson.personType) return false;
+        if (havePrivilage != null ? !havePrivilage.equals(cPerson.havePrivilage) : cPerson.havePrivilage != null)
+            return false;
+        return citationIndex != null ? citationIndex.equals(cPerson.citationIndex) : cPerson.citationIndex == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (birthTimestamp != null ? birthTimestamp.hashCode() : 0);
         result = 31 * result + (birthPlace != null ? birthPlace.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (personType != null ? personType.hashCode() : 0);
+        result = 31 * result + (havePrivilage != null ? havePrivilage.hashCode() : 0);
+        result = 31 * result + (citationIndex != null ? citationIndex.hashCode() : 0);
         return result;
     }
 }

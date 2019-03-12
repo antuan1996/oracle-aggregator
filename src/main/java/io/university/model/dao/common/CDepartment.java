@@ -43,7 +43,7 @@ public class CDepartment implements Serializable {
         return name;
     }
 
-    public int getParentDepartmentId() {
+    public Integer getParentDepartmentId() {
         return parentDepartmentId;
     }
 
@@ -63,5 +63,25 @@ public class CDepartment implements Serializable {
 
     public List<CStudy> getStudies() {
         return studies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CDepartment that = (CDepartment) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return parentDepartmentId != null ? parentDepartmentId.equals(that.parentDepartmentId) : that.parentDepartmentId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (parentDepartmentId != null ? parentDepartmentId.hashCode() : 0);
+        return result;
     }
 }
