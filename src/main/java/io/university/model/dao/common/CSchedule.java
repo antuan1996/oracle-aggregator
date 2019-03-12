@@ -82,4 +82,29 @@ public class CSchedule implements Serializable {
         this.subject = subject;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CSchedule cSchedule = (CSchedule) o;
+
+        if (id != cSchedule.id) return false;
+        if (startTimestamp != null ? !startTimestamp.equals(cSchedule.startTimestamp) : cSchedule.startTimestamp != null)
+            return false;
+        if (endTimestamp != null ? !endTimestamp.equals(cSchedule.endTimestamp) : cSchedule.endTimestamp != null)
+            return false;
+        if (audience != null ? !audience.equals(cSchedule.audience) : cSchedule.audience != null) return false;
+        return campusId != null ? campusId.equals(cSchedule.campusId) : cSchedule.campusId == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+        result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
+        result = 31 * result + (audience != null ? audience.hashCode() : 0);
+        result = 31 * result + (campusId != null ? campusId.hashCode() : 0);
+        return result;
+    }
 }

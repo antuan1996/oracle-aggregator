@@ -3,7 +3,7 @@ package io.university.model.dao.common;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.simple.number.GenUByte;
-import io.dummymaker.annotation.simple.number.GenUShort;
+import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenCountry;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
@@ -25,10 +25,10 @@ public class CCommunity {
     @GeneratedValue
     private int id;
 
-    @GenUShort
+    @GenUInteger
     private Integer roomCount;
 
-    @GenUShort
+    @GenUInteger
     private Integer payRentPerPerson;
 
     @GenCountry
@@ -37,18 +37,18 @@ public class CCommunity {
     @GenCity
     private String street;
 
-    @GenUByte
+    @GenUInteger
     private Integer houseNumber;
 
     @GenUByte
     private Integer housingNumber;
 
-    @GenSet(value = EmbeddedGenerator.class, depth = 8)
+    @GenSet(value = EmbeddedGenerator.class, depth = 8, max = 6)
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private Set<CRoom> rooms = new HashSet<>();
 
     @JsonIgnore
-    @GenSet(value = EmbeddedGenerator.class, depth = 8)
+    @GenSet(value = EmbeddedGenerator.class, depth = 8, max = 6)
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private Set<CVisit> visits = new HashSet<>();
 

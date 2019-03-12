@@ -3,7 +3,7 @@ package io.university.model.dao.common;
 import io.dummymaker.annotation.complex.GenEnum;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenBoolean;
-import io.dummymaker.annotation.simple.number.GenUByte;
+import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenName;
 import io.dummymaker.annotation.simple.string.GenSurname;
@@ -55,14 +55,14 @@ public class CPerson implements Serializable {
     @GenBoolean
     private Boolean havePrivilage;
 
-    @GenUByte
+    @GenUInteger
     private Integer citationIndex;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "cschedule_mapper",
-            joinColumns = { @JoinColumn(name = "person_id") },
-            inverseJoinColumns = { @JoinColumn(name = "schedule_id") }
+            joinColumns = {@JoinColumn(name = "person_uid")},
+            inverseJoinColumns = {@JoinColumn(name = "schedule_uid")}
     )
     private Set<CSchedule> schedules = new HashSet<>();
 
@@ -95,8 +95,8 @@ public class CPerson implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "cconference_mapper",
-            joinColumns = { @JoinColumn(name = "person_id") },
-            inverseJoinColumns = { @JoinColumn(name = "conference_id") }
+            joinColumns = {@JoinColumn(name = "person_uid")},
+            inverseJoinColumns = {@JoinColumn(name = "conference_uid")}
     )
     private Set<CConference> conferences = new HashSet<>();
 

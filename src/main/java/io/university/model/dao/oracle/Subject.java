@@ -47,7 +47,7 @@ public class Subject implements Serializable {
     @OneToOne(mappedBy = "subject")
     private Schedule schedule;
 
-    @GenList(value = EmbeddedGenerator.class, depth = 7)
+    @GenList(value = EmbeddedGenerator.class, depth = 7, max = 5)
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     private List<Grade> grades = new ArrayList<>();
 

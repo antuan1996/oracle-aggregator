@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenBoolean;
-import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
@@ -30,7 +29,7 @@ public class CRoom {
     @GenUShort
     private String roomNumber;
 
-    @GenUByte
+    @GenUInteger
     private Integer peopleCapacity;
 
     @GenUInteger
@@ -43,7 +42,7 @@ public class CRoom {
     private Boolean haveInsects;
 
     @JsonIgnore
-    @GenSet(value = EmbeddedGenerator.class, depth = 8)
+    @GenSet(value = EmbeddedGenerator.class, depth = 8, max = 6)
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Set<CLiving> livings = new HashSet<>();
 

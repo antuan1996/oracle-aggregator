@@ -106,14 +106,16 @@ public class CPeopleFactory implements IFactory<CPerson> {
             subjects.get(i).setSchedule(schedule);
             schedule.setSubject(subjects.get(i));
         }
+        scheduleStorage.save(schedules);
 
+        final List<CSpeciality> cSpecialities = specialityStorage.findAll();
         for (int i = 0; i < people.size(); i++) {
             final CPerson p = people.get(i);
-            final CSpeciality speciality = specialities.get(i / SPECIALITY_RATIO);
-            speciality.getSubjects().forEach(s -> p.addSchedule(s.getSchedule()));
+            final CSpeciality speciality = cSpecialities.get(i / SPECIALITY_RATIO);
+            speciality.getSubjects().stream()
+                    .filter(s -> s.getSchedule() != null)
+                    .forEach(s -> p.addSchedule(s.getSchedule()));
         }
-        scheduleStorage.save(schedules);
-        peopleStorage.save(people);
 
         final List<CConference> conferences = factory.produce(CConference.class, confNum);
         for (CConference conference : conferences) {
