@@ -18,7 +18,6 @@ import java.util.Set;
  * @since 05.03.2019
  */
 @Entity
-@Table(schema = "sys")
 public class CSchedule implements Serializable {
 
     @Id

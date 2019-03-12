@@ -15,7 +15,6 @@ import java.util.List;
  * @since 16.02.2019
  */
 @Entity
-@Table(schema = "sys")
 public class Department implements Serializable {
 
     @Id

@@ -21,7 +21,6 @@ import java.util.Objects;
  * @since 05.03.2019
  */
 @Entity
-@Table(schema = "sys")
 public class CSpeciality implements Serializable {
 
     @Id

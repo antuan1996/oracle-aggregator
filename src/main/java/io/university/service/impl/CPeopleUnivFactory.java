@@ -12,20 +12,27 @@ import java.util.List;
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 05.03.2019
+ * @since 12.03.2019
  */
 @Service
-public class CPeopleFactory extends BasicFactory<CPerson> {
+public class CPeopleUnivFactory extends BasicFactory<CPerson> {
 
     private final GenProduceFactory factory = new GenProduceFactory();
 
-    private final CDepartmentStorage departmentStorage;
-    private final CSpecialityStorage specialityStorage;
-    private final CScheduleStorage scheduleStorage;
-    private final CSubjectStorage subjectStorage;
-    private final CPersonStorage peopleStorage;
-    private final CEditionStorage editionStorage;
-    private final CCommunityStorage communityStorage;
+    @Autowired
+    private CDepartmentStorage departmentStorage;
+    @Autowired
+    private CSpecialityStorage specialityStorage;
+    @Autowired
+    private CScheduleStorage scheduleStorage;
+    @Autowired
+    private CSubjectStorage subjectStorage;
+    @Autowired
+    private CPersonStorage peopleStorage;
+    @Autowired
+    private CEditionStorage editionStorage;
+    @Autowired
+    private CCommunityStorage communityStorage;
 
     private static final int DEPARTMENT_RATIO = 100;
     private static final int CONFERENCE_RATIO = 40;
@@ -34,23 +41,6 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
     private static final int BOOKS_RATIO = 40;
     private static final int COMMUNITY_RATIO = 30;
     private static final int SPECIALITY_RATIO = 30;
-
-    @Autowired
-    public CPeopleFactory(CDepartmentStorage departmentStorage,
-                          CSubjectStorage subjectStorage,
-                          CSpecialityStorage specialityStorage,
-                          CPersonStorage peopleStorage,
-                          CScheduleStorage scheduleStorage,
-                          CCommunityStorage communityStorage,
-                          CEditionStorage editionStorage) {
-        this.departmentStorage = departmentStorage;
-        this.subjectStorage = subjectStorage;
-        this.specialityStorage = specialityStorage;
-        this.peopleStorage = peopleStorage;
-        this.scheduleStorage = scheduleStorage;
-        this.communityStorage = communityStorage;
-        this.editionStorage = editionStorage;
-    }
 
     @Override
     public CPerson build() {
@@ -95,7 +85,6 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
             p.getWorkHistory().setDepartment(department);
 
         }
-        peopleStorage.save(people);
 
         final List<CSubject> subjects = subjectStorage.findAll();
         final List<CSchedule> schedules = factory.produce(CSchedule.class, subjects.size());
@@ -120,7 +109,6 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
             final CPerson person = randomPick(people);
             person.addConference(conference);
         }
-        peopleStorage.save(people);
 
         final List<CBook> books = factory.produce(CBook.class, bookNum);
         for (CBook book : books) {
@@ -131,7 +119,6 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
                 reading.setPerson(person);
             }
         }
-        peopleStorage.save(people);
 
         final List<CProject> projects = factory.produce(CProject.class, projNum);
         for (CProject project : projects) {
@@ -142,10 +129,8 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
                 participation.setPerson(person);
             }
         }
-        peopleStorage.save(people);
 
         final List<CEdition> editions = factory.produce(CEdition.class, editNum);
-        editionStorage.save(editions);
         for (CEdition edition : editions) {
             for (CPublishment publishment : edition.getPublishments()) {
                 final CPerson person = randomPick(people);
@@ -154,8 +139,6 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
                 person.addPublishment(publishment);
             }
         }
-        editionStorage.save(editions);
-        peopleStorage.save(people);
 
         final List<CCommunity> communities = factory.produce(CCommunity.class, commNum);
         for (CCommunity community : communities) {

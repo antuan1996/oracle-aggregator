@@ -2,7 +2,6 @@ package io.university.model.dao.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
-import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.number.GenUInteger;
 import io.dummymaker.annotation.simple.string.GenCity;
 import io.dummymaker.annotation.simple.string.GenCountry;
@@ -40,7 +39,7 @@ public class CCommunity {
     @GenUInteger
     private Integer houseNumber;
 
-    @GenUByte
+    @GenUInteger
     private Integer housingNumber;
 
     @GenSet(value = EmbeddedGenerator.class, depth = 8, max = 6)

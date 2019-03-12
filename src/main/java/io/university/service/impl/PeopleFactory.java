@@ -2,7 +2,6 @@ package io.university.service.impl;
 
 import io.dummymaker.factory.impl.GenProduceFactory;
 import io.university.model.dao.oracle.*;
-import io.university.service.IFactory;
 import io.university.storage.impl.oracle.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since 01.03.2019
  */
 @Component
-public class PeopleFactory implements IFactory<Person> {
+public class PeopleFactory extends BasicFactory<Person> {
 
     private final DepartmentStorage departmentStorage;
     private final SpecialityStorage specialityStorage;

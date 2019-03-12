@@ -15,7 +15,6 @@ import java.sql.Timestamp;
  * @since 16.02.2019
  */
 @Entity
-@Table(schema = "sys")
 public class Grade implements Serializable {
 
     @Id

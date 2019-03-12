@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: "local"
+
+---
+
+spring:
+  profiles: local
   jpa:
     database: oracle
     show-sql: true
@@ -7,9 +14,27 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
   datasource:
-    url: jdbc:oracle:thin:@localhost:32769:ORCLCDB
-    username: sys as sysdba
-    password: Oradoc_db1
+    url: ${ORA_URL}
+    username: ${ORA_USER}
+    password: ${ORA_PASS}
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    platform: org.hibernate.dialect.Oracle10gDialect
+
+---
+
+spring:
+  profiles: univ
+  jpa:
+    database: oracle
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+  datasource:
+    url: ${ORA_URL}
+    username: ${ORA_USER}
+    password: ${ORA_PASS}
     driver-class-name: oracle.jdbc.driver.OracleDriver
     platform: org.hibernate.dialect.Oracle10gDialect
 

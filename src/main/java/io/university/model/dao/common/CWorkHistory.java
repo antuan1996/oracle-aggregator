@@ -15,7 +15,6 @@ import java.sql.Timestamp;
  * @since 05.03.2019
  */
 @Entity
-@Table(schema = "sys")
 public class CWorkHistory implements Serializable {
 
     @Id

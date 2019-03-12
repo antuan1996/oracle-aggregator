@@ -22,7 +22,6 @@ import java.util.List;
  * @since 05.03.2019
  */
 @Entity
-@Table(schema = "sys")
 public class CSubject implements Serializable {
 
     @Id

@@ -17,7 +17,6 @@ import java.util.Set;
  * @since 16.02.2019
  */
 @Entity
-@Table(schema = "sys")
 public class Schedule implements Serializable {
 
     @Id

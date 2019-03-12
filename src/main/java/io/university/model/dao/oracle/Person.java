@@ -20,7 +20,6 @@ import java.util.Set;
  * @since 16.02.2019
  */
 @Entity
-@Table(schema = "sys")
 public class Person implements Serializable {
 
     public enum PersonType {
@@ -30,7 +29,7 @@ public class Person implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenName
     private String name;
@@ -69,7 +68,7 @@ public class Person implements Serializable {
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private Study study;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

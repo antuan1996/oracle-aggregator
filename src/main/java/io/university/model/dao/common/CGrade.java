@@ -3,7 +3,7 @@ package io.university.model.dao.common;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenCharacter;
-import io.dummymaker.annotation.simple.number.GenInteger;
+import io.dummymaker.annotation.simple.number.GenUInteger;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,18 +16,17 @@ import java.sql.Timestamp;
  * @since 05.03.2019
  */
 @Entity
-@Table(schema = "sys")
 public class CGrade implements Serializable {
 
     @Id
     @GeneratedValue
     private int id;
 
-    @GenInteger
-    private int numValue;
+    @GenUInteger
+    private Integer numValue;
 
     @GenCharacter
-    private char latinValue;
+    private Character latinValue;
 
     @GenTime
     private Timestamp gradeTimestamp;
@@ -45,11 +44,11 @@ public class CGrade implements Serializable {
         return id;
     }
 
-    public int getNumValue() {
+    public Integer getNumValue() {
         return numValue;
     }
 
-    public char getLatinValue() {
+    public Character getLatinValue() {
         return latinValue;
     }
 
