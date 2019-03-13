@@ -1,9 +1,7 @@
-package io.university.controller;
+package io.university.controller.common;
 
 import io.university.model.dao.common.CPerson;
-import io.university.service.impl.CPeopleFactory;
-import io.university.service.impl.CPeopleGenFactory;
-import io.university.service.impl.CPeopleUnivFactory;
+import io.university.service.factory.impl.CPeopleFactory;
 import io.university.storage.impl.common.CPersonStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +20,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class CPeopleController {
 
-    @Autowired private CPeopleGenFactory genFactory;
-    @Autowired private CPeopleUnivFactory univFactory;
     @Autowired private CPeopleFactory factory;
     @Autowired private CPersonStorage peopleStorage;
 
@@ -38,7 +34,7 @@ public class CPeopleController {
                 ? amount
                 : ThreadLocalRandom.current().nextInt(2, 4);
 
-        final List<CPerson> people = genFactory.build(genAmount);
+        final List<CPerson> people = factory.build(genAmount);
         peopleStorage.save(people);
         return people.subList(0, 1);
     }

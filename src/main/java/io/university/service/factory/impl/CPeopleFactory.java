@@ -1,39 +1,44 @@
-package io.university.service.impl;
+package io.university.service.factory.impl;
 
-import io.dummymaker.factory.impl.GenProduceFactory;
 import io.university.model.dao.common.*;
-import io.university.storage.impl.common.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 12.03.2019
+ * @since 13.03.2019
  */
 @Service
-public class CPeopleUnivFactory extends BasicFactory<CPerson> {
+public class CPeopleFactory extends BasicFactory<CPerson> {
 
-    private final GenProduceFactory factory = new GenProduceFactory();
+    private enum Ratio {
+        DEPARTMENT(100),
+        CONFERENCE(40),
+        EDITION(50),
+        PROJECT(40),
+        BOOKS(40),
+        COMMUNITY(30),
+        SPECIALITY(30);
 
-    @Autowired private CDepartmentStorage departmentStorage;
-    @Autowired private CSpecialityStorage specialityStorage;
-    @Autowired private CScheduleStorage scheduleStorage;
-    @Autowired private CSubjectStorage subjectStorage;
-    @Autowired private CPersonStorage peopleStorage;
-    @Autowired private CEditionStorage editionStorage;
-    @Autowired private CCommunityStorage communityStorage;
+        private final int value;
 
-    private static final int DEPARTMENT_RATIO = 100;
-    private static final int CONFERENCE_RATIO = 40;
-    private static final int EDITION_RATIO = 50;
-    private static final int PROJECT_RATIO = 40;
-    private static final int BOOKS_RATIO = 40;
-    private static final int COMMUNITY_RATIO = 30;
-    private static final int SPECIALITY_RATIO = 30;
+        Ratio(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public int getRatio(int n) {
+            return n < value ? 1 : n / value;
+        }
+    }
 
     @Override
     public CPerson build() {
@@ -42,16 +47,8 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
 
     @Override
     public List<CPerson> build(int n) {
-        final int depNum = (n < DEPARTMENT_RATIO) ? 1 : n / DEPARTMENT_RATIO;
-        final int specNum = (n < SPECIALITY_RATIO) ? 1 : n / SPECIALITY_RATIO;
-        final int projNum = (n < PROJECT_RATIO) ? 1 : n / PROJECT_RATIO;
-        final int bookNum = (n < BOOKS_RATIO) ? 1 : n / BOOKS_RATIO;
-        final int editNum = (n < EDITION_RATIO) ? 1 : n / EDITION_RATIO;
-        final int confNum = (n < CONFERENCE_RATIO) ? 1 : n / CONFERENCE_RATIO;
-        final int commNum = (n < COMMUNITY_RATIO) ? 1 : n / COMMUNITY_RATIO;
-
-        final List<CDepartment> departments = factory.produce(CDepartment.class, depNum);
-        final List<CSpeciality> specialities = factory.produce(CSpeciality.class, specNum);
+        final List<CDepartment> departments = factory.produce(CDepartment.class, Ratio.DEPARTMENT.getRatio(n));
+        final List<CSpeciality> specialities = factory.produce(CSpeciality.class, Ratio.SPECIALITY.getRatio(n));
         final List<CPerson> people = factory.produce(CPerson.class, n);
 
         specialities.forEach(s -> s.getSubjects().forEach(subject -> {
@@ -62,47 +59,48 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
                 person.addGrade(g);
             });
         }));
-        specialityStorage.save(specialities);
-        departmentStorage.save(departments);
 
         for (int i = 0; i < people.size(); i++) {
             final CPerson p = people.get(i);
-            final CSpeciality speciality = specialities.get(i / SPECIALITY_RATIO);
+            final CSpeciality speciality = specialities.get(i / Ratio.SPECIALITY.value);
 
             p.getStudy().setPerson(p);
             p.getStudy().setSpeciality(speciality);
             p.getWorkHistory().setPerson(p);
 
-            final CDepartment department = departments.get(i / DEPARTMENT_RATIO);
+            final CDepartment department = departments.get(i / Ratio.DEPARTMENT.value);
             p.getStudy().setDepartment(department);
             p.getWorkHistory().setDepartment(department);
         }
 
-        final List<CSubject> subjects = subjectStorage.findAll();
+        final List<CSubject> subjects = specialities.stream()
+                .filter(s -> !CollectionUtils.isEmpty(s.getSubjects()))
+                .map(CSpeciality::getSubjects)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
         final List<CSchedule> schedules = factory.produce(CSchedule.class, subjects.size());
         for (int i = 0; i < subjects.size(); i++) {
             final CSchedule schedule = schedules.get(i);
             subjects.get(i).setSchedule(schedule);
             schedule.setSubject(subjects.get(i));
         }
-        scheduleStorage.save(schedules);
 
-        final List<CSpeciality> cSpecialities = specialityStorage.findAll();
         for (int i = 0; i < people.size(); i++) {
             final CPerson p = people.get(i);
-            final CSpeciality speciality = cSpecialities.get(i / SPECIALITY_RATIO);
+            final CSpeciality speciality = specialities.get(i / Ratio.DEPARTMENT.value);
             speciality.getSubjects().stream()
                     .filter(s -> s.getSchedule() != null)
                     .forEach(s -> p.addSchedule(s.getSchedule()));
         }
 
-        final List<CConference> conferences = factory.produce(CConference.class, confNum);
+        final List<CConference> conferences = factory.produce(CConference.class, Ratio.CONFERENCE.getRatio(n));
         for (CConference conference : conferences) {
             final CPerson person = randomPick(people);
             person.addConference(conference);
         }
 
-        final List<CBook> books = factory.produce(CBook.class, bookNum);
+        final List<CBook> books = factory.produce(CBook.class, Ratio.BOOKS.getRatio(n));
         for (CBook book : books) {
             for (CReading reading : book.getReadings()) {
                 final CPerson person = randomPick(people);
@@ -112,7 +110,7 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
             }
         }
 
-        final List<CProject> projects = factory.produce(CProject.class, projNum);
+        final List<CProject> projects = factory.produce(CProject.class, Ratio.PROJECT.getRatio(n));
         for (CProject project : projects) {
             for (CProjectParticipation participation : project.getParticipations()) {
                 final CPerson person = randomPick(people);
@@ -122,7 +120,7 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
             }
         }
 
-        final List<CEdition> editions = factory.produce(CEdition.class, editNum);
+        final List<CEdition> editions = factory.produce(CEdition.class, Ratio.EDITION.getRatio(n));
         for (CEdition edition : editions) {
             for (CPublishment publishment : edition.getPublishments()) {
                 final CPerson person = randomPick(people);
@@ -132,7 +130,7 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
             }
         }
 
-        final List<CCommunity> communities = factory.produce(CCommunity.class, commNum);
+        final List<CCommunity> communities = factory.produce(CCommunity.class, Ratio.COMMUNITY.getRatio(n));
         for (CCommunity community : communities) {
             for (CRoom room : community.getRooms()) {
                 room.setCommunity(community);
@@ -151,8 +149,6 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
                 person.addVisit(visit);
             }
         }
-        communityStorage.save(communities);
-        peopleStorage.save(people);
 
         return people;
     }

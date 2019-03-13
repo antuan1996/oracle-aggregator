@@ -1,6 +1,7 @@
-package io.university.service.impl;
+package io.university.service.validator.impl;
 
 import io.university.model.dao.common.*;
+import io.university.service.validator.IValidator;
 import io.university.storage.impl.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,35 +10,24 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * "default comment"
+ * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 11.03.2019
+ * @since 13.03.2019
  */
 @Service
-public class CPeopleValidateStorage {
+public class CPersonOracleValidator implements IValidator<CPerson> {
 
     @Autowired private CDepartmentStorage departmentStorage;
     @Autowired private CSpecialityStorage specialityStorage;
     @Autowired private CScheduleStorage scheduleStorage;
     @Autowired private CSubjectStorage subjectStorage;
     @Autowired private CPersonStorage peopleStorage;
-    @Autowired private CEditionStorage editionStorage;
-    @Autowired private CCommunityStorage communityStorage;
 
-    public List<CPerson> saveUpdate(List<CPerson> people) {
-        if (CollectionUtils.isEmpty(people))
-            return Collections.emptyList();
-
-        saveUpdateStudies(people);
-
-        return people;
-    }
-
-    private void saveUpdateStudies(List<CPerson> people) {
+    @Override
+    public List<CPerson> validate(List<CPerson> people) {
         for (CPerson person : people) {
             if (!CollectionUtils.isEmpty(people.get(0).getGrades())) {
                 for (CGrade grade : person.getGrades()) {
@@ -45,14 +35,14 @@ public class CPeopleValidateStorage {
                     if (subject != null) {
                         final CSpeciality speciality = subject.getSpeciality();
                         if (speciality != null) {
-                            specialityStorage.save(speciality);
+                            //specialityStorage.save(speciality);
                             speciality.addSubject(subject);
                             subject.setSpeciality(speciality);
                         }
 
                         grade.setSubject(subject);
                         subject.addGrade(grade);
-                        subjectStorage.save(subject);
+                        //specialityStorage.save(speciality);
                     }
                     person.addGrade(grade);
                 }
@@ -64,7 +54,7 @@ public class CPeopleValidateStorage {
 
                 final CSpeciality speciality = study.getSpeciality();
                 if(speciality != null) {
-                    specialityStorage.save(speciality);
+                    //specialityStorage.save(speciality);
                 }
             }
 
@@ -74,15 +64,12 @@ public class CPeopleValidateStorage {
                     schedule.addPerson(person);
                     final CSubject subject = schedule.getSubject();
                     if(subject != null) {
-                        subjectStorage.save(subject);
+                        //specialityStorage.save(speciality);
                     }
                 }
             }
         }
-        peopleStorage.save(people);
-    }
 
-    private <T> T randomPick(List<T> list) {
-        return list.get(ThreadLocalRandom.current().nextInt(0, list.size() - 1));
+        return Collections.emptyList();
     }
 }
