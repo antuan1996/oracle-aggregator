@@ -99,7 +99,7 @@ public class CPerson implements Serializable {
     )
     private Set<CConference> conferences = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

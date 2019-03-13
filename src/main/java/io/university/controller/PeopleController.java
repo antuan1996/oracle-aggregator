@@ -29,7 +29,7 @@ public class PeopleController {
     }
 
     @GetMapping("/fill")
-    public List<Person> fillDepartmentWithPeople() {
+    public List<Person> fillWithPeople() {
         factory.build(ThreadLocalRandom.current().nextInt(2, 4));
         return Collections.emptyList();
     }

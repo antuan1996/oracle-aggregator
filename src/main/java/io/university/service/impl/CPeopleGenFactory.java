@@ -2,30 +2,22 @@ package io.university.service.impl;
 
 import io.dummymaker.factory.impl.GenProduceFactory;
 import io.university.model.dao.common.*;
-import io.university.storage.impl.common.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * ! NO DESCRIPTION !
  *
  * @author GoodforGod
- * @since 12.03.2019
+ * @since 13.03.2019
  */
 @Service
-public class CPeopleUnivFactory extends BasicFactory<CPerson> {
+public class CPeopleGenFactory extends BasicFactory<CPerson> {
 
     private final GenProduceFactory factory = new GenProduceFactory();
-
-    @Autowired private CDepartmentStorage departmentStorage;
-    @Autowired private CSpecialityStorage specialityStorage;
-    @Autowired private CScheduleStorage scheduleStorage;
-    @Autowired private CSubjectStorage subjectStorage;
-    @Autowired private CPersonStorage peopleStorage;
-    @Autowired private CEditionStorage editionStorage;
-    @Autowired private CCommunityStorage communityStorage;
 
     private static final int DEPARTMENT_RATIO = 100;
     private static final int CONFERENCE_RATIO = 40;
@@ -62,8 +54,6 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
                 person.addGrade(g);
             });
         }));
-        specialityStorage.save(specialities);
-        departmentStorage.save(departments);
 
         for (int i = 0; i < people.size(); i++) {
             final CPerson p = people.get(i);
@@ -78,19 +68,22 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
             p.getWorkHistory().setDepartment(department);
         }
 
-        final List<CSubject> subjects = subjectStorage.findAll();
+        final List<CSubject> subjects = specialities.stream()
+                .filter(s -> !CollectionUtils.isEmpty(s.getSubjects()))
+                .map(CSpeciality::getSubjects)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
         final List<CSchedule> schedules = factory.produce(CSchedule.class, subjects.size());
         for (int i = 0; i < subjects.size(); i++) {
             final CSchedule schedule = schedules.get(i);
             subjects.get(i).setSchedule(schedule);
             schedule.setSubject(subjects.get(i));
         }
-        scheduleStorage.save(schedules);
 
-        final List<CSpeciality> cSpecialities = specialityStorage.findAll();
         for (int i = 0; i < people.size(); i++) {
             final CPerson p = people.get(i);
-            final CSpeciality speciality = cSpecialities.get(i / SPECIALITY_RATIO);
+            final CSpeciality speciality = specialities.get(i / SPECIALITY_RATIO);
             speciality.getSubjects().stream()
                     .filter(s -> s.getSchedule() != null)
                     .forEach(s -> p.addSchedule(s.getSchedule()));
@@ -151,8 +144,6 @@ public class CPeopleUnivFactory extends BasicFactory<CPerson> {
                 person.addVisit(visit);
             }
         }
-        communityStorage.save(communities);
-        peopleStorage.save(people);
 
         return people;
     }
