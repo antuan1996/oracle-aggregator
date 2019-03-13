@@ -22,4 +22,10 @@ RUN cd / && \
     apt-get -y autoremove && \
     mv build/libs/oracle-aggregator-1.0.0.jar /
 
-ENTRYPOINT ["java", "-jar", "/oracle-aggregator-1.0.0.jar"]
+# Enviroment variables for DB connection (default)
+# https://hub.docker.com/_/oracle-database-enterprise-edition
+ENV ORA_USER="sys as sysdba" \
+    ORA_PASS="Oradoc_db1" \
+    ORA_URL="jdbc:oracle:thin:@localhost:32769:ORCLCDB"
+
+ENTRYPOINT ["java", "-jar", "-Djava.security.egd=file:/dev/./urandom", "/oracle-aggregator-1.0.0.jar"]
