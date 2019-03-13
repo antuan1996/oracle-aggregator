@@ -28,6 +28,9 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
 
     @Override
     public List<CPerson> validate(List<CPerson> people) {
+        if(CollectionUtils.isEmpty(people))
+            return Collections.emptyList();
+
         for (CPerson person : people) {
             if (!CollectionUtils.isEmpty(people.get(0).getGrades())) {
                 for (CGrade grade : person.getGrades()) {

@@ -32,8 +32,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Shop Service")
-                .description("Service API For Univ Database Project")
+                .title("Oracle Aggregator")
+                .description("Service API For Oracle Aggregator Database Project")
                 .build();
     }
 }
