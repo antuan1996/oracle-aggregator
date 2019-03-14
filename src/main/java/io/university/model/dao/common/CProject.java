@@ -21,7 +21,7 @@ public class CProject {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenNick
     private String name;
@@ -34,7 +34,7 @@ public class CProject {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<CProjectParticipation> participations = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -62,14 +62,14 @@ public class CProject {
 
         CProject cProject = (CProject) o;
 
-        if (id != cProject.id) return false;
+        if (id != null ? !id.equals(cProject.id) : cProject.id != null) return false;
         if (name != null ? !name.equals(cProject.name) : cProject.name != null) return false;
         return description != null ? description.equals(cProject.description) : cProject.description == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;

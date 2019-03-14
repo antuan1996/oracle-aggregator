@@ -3,6 +3,7 @@ services:
   oracle:
     image: store/oracle/database-enterprise:12.2.0.1
     restart: always
+# Uncomment if you need volumes
 #    volumes:
 #    - "/data/OracleDBData:/ORCL store/oracle/database-enterprise:12.2.0.1"
     ports:
@@ -11,7 +12,6 @@ services:
   aggregator:
     build: .
     image: oracle-aggregator
-    restart: always
     links:
     - oracle
     ports:

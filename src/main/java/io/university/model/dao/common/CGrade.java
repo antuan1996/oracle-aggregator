@@ -20,7 +20,7 @@ public class CGrade implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenUInteger
     private Integer numValue;
@@ -40,7 +40,7 @@ public class CGrade implements Serializable {
     @JoinColumn(name = "person_uid")
     private CPerson person;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -79,17 +79,17 @@ public class CGrade implements Serializable {
 
         CGrade cGrade = (CGrade) o;
 
-        if (id != cGrade.id) return false;
-        if (numValue != cGrade.numValue) return false;
-        if (latinValue != cGrade.latinValue) return false;
+        if (id != null ? !id.equals(cGrade.id) : cGrade.id != null) return false;
+        if (numValue != null ? !numValue.equals(cGrade.numValue) : cGrade.numValue != null) return false;
+        if (latinValue != null ? !latinValue.equals(cGrade.latinValue) : cGrade.latinValue != null) return false;
         return gradeTimestamp != null ? gradeTimestamp.equals(cGrade.gradeTimestamp) : cGrade.gradeTimestamp == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + numValue;
-        result = 31 * result + (int) latinValue;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (numValue != null ? numValue.hashCode() : 0);
+        result = 31 * result + (latinValue != null ? latinValue.hashCode() : 0);
         result = 31 * result + (gradeTimestamp != null ? gradeTimestamp.hashCode() : 0);
         return result;
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.GenBoolean;
-import io.dummymaker.annotation.simple.number.GenUInteger;
+import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.number.GenUShort;
 import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 
@@ -24,15 +24,15 @@ public class CRoom {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenUShort
     private String roomNumber;
 
-    @GenUInteger
+    @GenUByte
     private Integer peopleCapacity;
 
-    @GenUInteger
+    @GenUByte
     private Integer peopleLiving;
 
     @GenTime
@@ -51,7 +51,7 @@ public class CRoom {
     @JoinColumn(name = "community_uid")
     private CCommunity community;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -99,24 +99,16 @@ public class CRoom {
 
         CRoom room = (CRoom) o;
 
-        if (id != room.id) return false;
+        if (id != null ? !id.equals(room.id) : room.id != null) return false;
         if (roomNumber != null ? !roomNumber.equals(room.roomNumber) : room.roomNumber != null) return false;
-        if (peopleCapacity != null ? !peopleCapacity.equals(room.peopleCapacity) : room.peopleCapacity != null)
-            return false;
-        if (peopleLiving != null ? !peopleLiving.equals(room.peopleLiving) : room.peopleLiving != null) return false;
-        if (desinfectionTimestamp != null ? !desinfectionTimestamp.equals(room.desinfectionTimestamp) : room.desinfectionTimestamp != null)
-            return false;
-        return haveInsects != null ? haveInsects.equals(room.haveInsects) : room.haveInsects == null;
+        return peopleCapacity != null ? peopleCapacity.equals(room.peopleCapacity) : room.peopleCapacity == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (roomNumber != null ? roomNumber.hashCode() : 0);
         result = 31 * result + (peopleCapacity != null ? peopleCapacity.hashCode() : 0);
-        result = 31 * result + (peopleLiving != null ? peopleLiving.hashCode() : 0);
-        result = 31 * result + (desinfectionTimestamp != null ? desinfectionTimestamp.hashCode() : 0);
-        result = 31 * result + (haveInsects != null ? haveInsects.hashCode() : 0);
         return result;
     }
 }

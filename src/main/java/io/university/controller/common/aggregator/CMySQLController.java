@@ -1,7 +1,6 @@
 package io.university.controller.common.aggregator;
 
 import io.university.model.dao.common.CPerson;
-import io.university.service.validator.impl.CPersonMongoValidator;
 import io.university.service.validator.impl.CPersonMySQLValidator;
 import io.university.storage.impl.common.CPersonStorage;
 import org.springframework.beans.factory.annotation.Autowired;

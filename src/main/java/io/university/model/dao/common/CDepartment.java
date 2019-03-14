@@ -19,7 +19,7 @@ public class CDepartment implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenCompany
     private String name;
@@ -34,7 +34,7 @@ public class CDepartment implements Serializable {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<CStudy> studies = new ArrayList<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -71,14 +71,14 @@ public class CDepartment implements Serializable {
 
         CDepartment that = (CDepartment) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return parentDepartmentId != null ? parentDepartmentId.equals(that.parentDepartmentId) : that.parentDepartmentId == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (parentDepartmentId != null ? parentDepartmentId.hashCode() : 0);
         return result;

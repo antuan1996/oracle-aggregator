@@ -23,7 +23,7 @@ public class CConference {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenName
     private String name;
@@ -44,7 +44,7 @@ public class CConference {
     @ManyToMany(mappedBy = "conferences", cascade = CascadeType.ALL)
     private Set<CPerson> people = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -84,7 +84,7 @@ public class CConference {
 
         CConference that = (CConference) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (country != null ? !country.equals(that.country) : that.country != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
@@ -94,7 +94,7 @@ public class CConference {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);

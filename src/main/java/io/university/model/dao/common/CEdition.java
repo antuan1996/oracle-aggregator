@@ -31,7 +31,7 @@ public class CEdition {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenName
     private String name;
@@ -58,7 +58,7 @@ public class CEdition {
     )
     private Set<CPublishment> publishments = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -98,7 +98,6 @@ public class CEdition {
 
         CEdition cEdition = (CEdition) o;
 
-        if (id != cEdition.id) return false;
         if (pages != cEdition.pages) return false;
         if (name != null ? !name.equals(cEdition.name) : cEdition.name != null) return false;
         if (lang != cEdition.lang) return false;
@@ -108,8 +107,7 @@ public class CEdition {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (lang != null ? lang.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + pages;

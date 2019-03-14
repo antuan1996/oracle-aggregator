@@ -5,6 +5,7 @@ Aggregates data from multiple databases and sync all in Oracle database.
 ## Build locally
 
 Download [oJDBC (ojdbc7.jar)](https://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html) and put it in */driver* folder.
+Rename it to *ojdbc7-12.1.0.2.jar*
 
 Then run:
 ```bash

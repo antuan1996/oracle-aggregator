@@ -33,6 +33,8 @@ public class CPersonMySQLValidator implements IValidator<CPerson> {
         if(CollectionUtils.isEmpty(people))
             return Collections.emptyList();
 
+        //TODO Your validation logic here
+
         return Collections.emptyList();
     }
 }

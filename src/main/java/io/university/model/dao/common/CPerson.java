@@ -233,11 +233,7 @@ public class CPerson implements Serializable {
         if (surname != null ? !surname.equals(cPerson.surname) : cPerson.surname != null) return false;
         if (birthTimestamp != null ? !birthTimestamp.equals(cPerson.birthTimestamp) : cPerson.birthTimestamp != null)
             return false;
-        if (birthPlace != null ? !birthPlace.equals(cPerson.birthPlace) : cPerson.birthPlace != null) return false;
-        if (personType != cPerson.personType) return false;
-        if (havePrivilage != null ? !havePrivilage.equals(cPerson.havePrivilage) : cPerson.havePrivilage != null)
-            return false;
-        return citationIndex != null ? citationIndex.equals(cPerson.citationIndex) : cPerson.citationIndex == null;
+        return birthPlace != null ? birthPlace.equals(cPerson.birthPlace) : cPerson.birthPlace == null;
     }
 
     @Override
@@ -248,9 +244,6 @@ public class CPerson implements Serializable {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (birthTimestamp != null ? birthTimestamp.hashCode() : 0);
         result = 31 * result + (birthPlace != null ? birthPlace.hashCode() : 0);
-        result = 31 * result + (personType != null ? personType.hashCode() : 0);
-        result = 31 * result + (havePrivilage != null ? havePrivilage.hashCode() : 0);
-        result = 31 * result + (citationIndex != null ? citationIndex.hashCode() : 0);
         return result;
     }
 }

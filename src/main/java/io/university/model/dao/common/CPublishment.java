@@ -20,13 +20,13 @@ public class CPublishment {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenName
     private String name;
 
     @GenTime
-    private Timestamp publish_timestamp;
+    private Timestamp publishTimestamp;
 
     @ManyToMany(mappedBy = "publishments", cascade = CascadeType.ALL)
     private Set<CEdition> editions = new HashSet<>();
@@ -36,7 +36,7 @@ public class CPublishment {
     @JoinColumn(name = "person_uid")
     private CPerson person;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -44,8 +44,8 @@ public class CPublishment {
         return name;
     }
 
-    public Timestamp getPublish_timestamp() {
-        return publish_timestamp;
+    public Timestamp getPublishTimestamp() {
+        return publishTimestamp;
     }
 
     public CPerson getPerson() {
@@ -72,16 +72,16 @@ public class CPublishment {
 
         CPublishment that = (CPublishment) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return publish_timestamp != null ? publish_timestamp.equals(that.publish_timestamp) : that.publish_timestamp == null;
+        return publishTimestamp != null ? publishTimestamp.equals(that.publishTimestamp) : that.publishTimestamp == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (publish_timestamp != null ? publish_timestamp.hashCode() : 0);
+        result = 31 * result + (publishTimestamp != null ? publishTimestamp.hashCode() : 0);
         return result;
     }
 }

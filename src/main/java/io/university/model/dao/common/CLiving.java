@@ -18,7 +18,7 @@ public class CLiving {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenTime
     private Timestamp enterTimestamp;
@@ -27,10 +27,10 @@ public class CLiving {
     private Timestamp exitTimestamp;
 
     @GenUInteger
-    private int enterCource;
+    private Integer enterCource;
 
     @GenUInteger
-    private int invoiceCount;
+    private Integer invoiceCount;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
@@ -41,7 +41,7 @@ public class CLiving {
     @JoinColumn(name = "room_uid")
     private CRoom room;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -53,11 +53,11 @@ public class CLiving {
         return exitTimestamp;
     }
 
-    public int getEnterCource() {
+    public Integer getEnterCource() {
         return enterCource;
     }
 
-    public int getInvoiceCount() {
+    public Integer getInvoiceCount() {
         return invoiceCount;
     }
 
@@ -82,23 +82,24 @@ public class CLiving {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CLiving cLiving = (CLiving) o;
+        CLiving living = (CLiving) o;
 
-        if (id != cLiving.id) return false;
-        if (enterCource != cLiving.enterCource) return false;
-        if (invoiceCount != cLiving.invoiceCount) return false;
-        if (enterTimestamp != null ? !enterTimestamp.equals(cLiving.enterTimestamp) : cLiving.enterTimestamp != null)
+        if (id != null ? !id.equals(living.id) : living.id != null) return false;
+        if (enterTimestamp != null ? !enterTimestamp.equals(living.enterTimestamp) : living.enterTimestamp != null)
             return false;
-        return exitTimestamp != null ? exitTimestamp.equals(cLiving.exitTimestamp) : cLiving.exitTimestamp == null;
+        if (exitTimestamp != null ? !exitTimestamp.equals(living.exitTimestamp) : living.exitTimestamp != null)
+            return false;
+        if (enterCource != null ? !enterCource.equals(living.enterCource) : living.enterCource != null) return false;
+        return invoiceCount != null ? invoiceCount.equals(living.invoiceCount) : living.invoiceCount == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (enterTimestamp != null ? enterTimestamp.hashCode() : 0);
         result = 31 * result + (exitTimestamp != null ? exitTimestamp.hashCode() : 0);
-        result = 31 * result + enterCource;
-        result = 31 * result + invoiceCount;
+        result = 31 * result + (enterCource != null ? enterCource.hashCode() : 0);
+        result = 31 * result + (invoiceCount != null ? invoiceCount.hashCode() : 0);
         return result;
     }
 }

@@ -17,7 +17,7 @@ public class CProjectParticipation {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenTime
     private Timestamp startTimestamp;
@@ -34,7 +34,7 @@ public class CProjectParticipation {
     @JoinColumn(name = "project_uid")
     private CProject project;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -69,7 +69,7 @@ public class CProjectParticipation {
 
         CProjectParticipation that = (CProjectParticipation) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (startTimestamp != null ? !startTimestamp.equals(that.startTimestamp) : that.startTimestamp != null)
             return false;
         return endTimestamp != null ? endTimestamp.equals(that.endTimestamp) : that.endTimestamp == null;
@@ -77,7 +77,7 @@ public class CProjectParticipation {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
         result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
         return result;

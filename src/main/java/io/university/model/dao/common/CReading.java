@@ -17,7 +17,7 @@ public class CReading {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenTime
     private Timestamp takeTimestamp;
@@ -34,7 +34,7 @@ public class CReading {
     @JoinColumn(name = "person_uid")
     private CPerson person;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -69,7 +69,7 @@ public class CReading {
 
         CReading cReading = (CReading) o;
 
-        if (id != cReading.id) return false;
+        if (id != null ? !id.equals(cReading.id) : cReading.id != null) return false;
         if (takeTimestamp != null ? !takeTimestamp.equals(cReading.takeTimestamp) : cReading.takeTimestamp != null)
             return false;
         return returnTimestamp != null ? returnTimestamp.equals(cReading.returnTimestamp) : cReading.returnTimestamp == null;
@@ -77,7 +77,7 @@ public class CReading {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (takeTimestamp != null ? takeTimestamp.hashCode() : 0);
         result = 31 * result + (returnTimestamp != null ? returnTimestamp.hashCode() : 0);
         return result;

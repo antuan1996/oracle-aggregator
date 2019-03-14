@@ -9,6 +9,7 @@ import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -22,7 +23,7 @@ public class CBook {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenUuid
     private String ISBN;
@@ -36,9 +37,9 @@ public class CBook {
     @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private Set<CReading> readings;
+    private Set<CReading> readings = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -70,7 +71,7 @@ public class CBook {
 
         CBook cBook = (CBook) o;
 
-        if (id != cBook.id) return false;
+        if (id != null ? !id.equals(cBook.id) : cBook.id != null) return false;
         if (ISBN != null ? !ISBN.equals(cBook.ISBN) : cBook.ISBN != null) return false;
         if (name != null ? !name.equals(cBook.name) : cBook.name != null) return false;
         return publishTimestamp != null ? publishTimestamp.equals(cBook.publishTimestamp) : cBook.publishTimestamp == null;
@@ -78,7 +79,7 @@ public class CBook {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (ISBN != null ? ISBN.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (publishTimestamp != null ? publishTimestamp.hashCode() : 0);

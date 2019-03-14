@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * ! NO DESCRIPTION !
@@ -24,11 +23,8 @@ import java.util.Objects;
 public class CSpeciality implements Serializable {
 
     @Id
-    @GeneratedValue
-    private int id;
-
     @GenUInteger
-    private int code;
+    private Integer code;
 
     @GenNick
     private String type;
@@ -48,11 +44,7 @@ public class CSpeciality implements Serializable {
     @OneToOne(mappedBy = "speciality", cascade = CascadeType.ALL)
     private CStudy study;
 
-    public int getId() {
-        return id;
-    }
-
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
@@ -85,17 +77,14 @@ public class CSpeciality implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         CSpeciality that = (CSpeciality) o;
-        return id == that.id &&
-                code == that.code &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(course, that.course) &&
-                Objects.equals(qualification, that.qualification);
+
+        return code != null ? code.equals(that.code) : that.code == null;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, code, type, course, qualification);
+        return code != null ? code.hashCode() : 0;
     }
 }

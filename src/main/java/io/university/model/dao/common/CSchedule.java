@@ -22,7 +22,7 @@ public class CSchedule implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenTime
     private Timestamp startTimestamp;
@@ -44,7 +44,7 @@ public class CSchedule implements Serializable {
     @JoinColumn(name = "subject_uid")
     private CSubject subject;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -99,7 +99,7 @@ public class CSchedule implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
         result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
         result = 31 * result + (audience != null ? audience.hashCode() : 0);

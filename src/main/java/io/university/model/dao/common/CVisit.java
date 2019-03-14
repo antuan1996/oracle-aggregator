@@ -17,7 +17,7 @@ public class CVisit {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenTime
     private Timestamp enterTimestamp;
@@ -34,7 +34,7 @@ public class CVisit {
     @JoinColumn(name = "community_uid")
     private CCommunity community;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -67,19 +67,13 @@ public class CVisit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CVisit cVisit = (CVisit) o;
+        CVisit visit = (CVisit) o;
 
-        if (id != cVisit.id) return false;
-        if (enterTimestamp != null ? !enterTimestamp.equals(cVisit.enterTimestamp) : cVisit.enterTimestamp != null)
-            return false;
-        return exitTimestamp != null ? exitTimestamp.equals(cVisit.exitTimestamp) : cVisit.exitTimestamp == null;
+        return id != null ? id.equals(visit.id) : visit.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (enterTimestamp != null ? enterTimestamp.hashCode() : 0);
-        result = 31 * result + (exitTimestamp != null ? exitTimestamp.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 }

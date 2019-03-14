@@ -25,11 +25,8 @@ import java.util.List;
 public class CSubject implements Serializable {
 
     @Id
-    @GeneratedValue
-    private int id;
-
     @GenUInteger
-    private int code;
+    private Integer code;
 
     @GenCountry
     private String name;
@@ -65,15 +62,7 @@ public class CSubject implements Serializable {
         this.speciality = speciality;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
@@ -108,5 +97,23 @@ public class CSubject implements Serializable {
     public CGrade addGrade(CGrade grade) {
         this.grades.add(grade);
         return grade;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CSubject cSubject = (CSubject) o;
+
+        if (code != null ? !code.equals(cSubject.code) : cSubject.code != null) return false;
+        return semester != null ? semester.equals(cSubject.semester) : cSubject.semester == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (semester != null ? semester.hashCode() : 0);
+        return result;
     }
 }

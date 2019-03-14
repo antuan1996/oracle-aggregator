@@ -22,7 +22,7 @@ public class CCommunity {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @GenUInteger
     private Integer roomCount;
@@ -51,7 +51,7 @@ public class CCommunity {
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private Set<CVisit> visits = new HashSet<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -104,7 +104,7 @@ public class CCommunity {
 
         CCommunity that = (CCommunity) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (roomCount != null ? !roomCount.equals(that.roomCount) : that.roomCount != null) return false;
         if (payRentPerPerson != null ? !payRentPerPerson.equals(that.payRentPerPerson) : that.payRentPerPerson != null)
             return false;
@@ -116,7 +116,7 @@ public class CCommunity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (roomCount != null ? roomCount.hashCode() : 0);
         result = 31 * result + (payRentPerPerson != null ? payRentPerPerson.hashCode() : 0);
         result = 31 * result + (district != null ? district.hashCode() : 0);
