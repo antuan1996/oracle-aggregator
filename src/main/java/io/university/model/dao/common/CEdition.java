@@ -43,19 +43,14 @@ public class CEdition {
     private String city;
 
     @GenUInteger
-    private int pages;
+    private Integer pages;
 
     @GenCountry
     private String type;
 
     @JsonIgnore
     @GenSet(value = EmbeddedGenerator.class, depth = 8)
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "cedition_mapper",
-            joinColumns = { @JoinColumn(name = "edition_id") },
-            inverseJoinColumns = { @JoinColumn(name = "publishment_id") }
-    )
+    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL)
     private Set<CPublishment> publishments = new HashSet<>();
 
     public Integer getId() {
@@ -74,7 +69,7 @@ public class CEdition {
         return city;
     }
 
-    public int getPages() {
+    public Integer getPages() {
         return pages;
     }
 

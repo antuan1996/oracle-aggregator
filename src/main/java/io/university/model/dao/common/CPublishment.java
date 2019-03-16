@@ -6,8 +6,6 @@ import io.dummymaker.annotation.simple.string.GenName;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * ! NO DESCRIPTION !
@@ -28,8 +26,10 @@ public class CPublishment {
     @GenTime
     private Timestamp publishTimestamp;
 
-    @ManyToMany(mappedBy = "publishments", cascade = CascadeType.ALL)
-    private Set<CEdition> editions = new HashSet<>();
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "edition_uid")
+    private CEdition editions;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,13 +56,12 @@ public class CPublishment {
         this.person = person;
     }
 
-    public Set<CEdition> getEditions() {
+    public CEdition getEditions() {
         return editions;
     }
 
-    public CEdition addEdition(CEdition edition) {
-        this.editions.add(edition);
-        return edition;
+    public void setEditions(CEdition editions) {
+        this.editions = editions;
     }
 
     @Override
