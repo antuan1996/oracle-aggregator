@@ -4,13 +4,22 @@ Aggregates data from multiple databases and sync all in Oracle database.
 
 ## Build & Run locally
 
-Download [oJDBC (ojdbc7.jar)](https://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html) and put it in */driver* folder.
-Rename it to *ojdbc7-12.1.0.2.jar*
+Install Oracle Database.
 
-Then run:
+Download repository.
+
+Download [oJDBC (ojdbc7.jar)](https://www.oracle.com/technetwork/database/features/jdbc/jdbc-drivers-12c-download-1958347.html) and put it in */driver* folder inside project root.
+Rename file to *ojdbc7-12.1.0.2.jar*
+
+Build with:
 ```bash
 ./gradlew bootJar
 ```
+
+Set environment variables:
+* ORA_USER - database user
+* ORA_PASS - database password
+* ORA_URL - database url (like *jdbc:oracle:thin:@localhost:32769:ORCLCDB*)
 
 Execute (Located in /build/libs):
 ```bash
@@ -38,7 +47,7 @@ docker-compose stop
 
 ### Endpoints
 
-All server ednpoints at - *localhost:8080/swagger-ui.html*
+All server endpoints at - *localhost:8080/swagger-ui.html*
 
 Learn more about [swagger ui](https://swagger.io/tools/swagger-ui/)
 
@@ -48,3 +57,7 @@ There are specific *load* & *load test* endpoints for each database with specifi
 Some tables changed, check DB for correct schema.
 
 ![](doc/schema_common.png)
+
+### JSON Example
+
+[Full JSON schema](https://pastebin.com/10irNJfY)

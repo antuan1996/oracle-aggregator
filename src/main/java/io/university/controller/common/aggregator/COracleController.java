@@ -56,7 +56,7 @@ public class COracleController extends BasicDatabaseController {
     )
     @GetMapping("/load/test")
     public List<CPerson> testLoad() {
-        final List<CPerson> people = generateCorrect(2);
+        final List<CPerson> people = generateAsJson(2);
         return load(people);
     }
 

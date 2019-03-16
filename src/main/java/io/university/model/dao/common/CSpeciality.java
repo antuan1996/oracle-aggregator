@@ -73,6 +73,10 @@ public class CSpeciality implements Serializable {
         return study;
     }
 
+    public void setStudy(CStudy study) {
+        this.study = study;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

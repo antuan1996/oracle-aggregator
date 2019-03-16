@@ -40,9 +40,8 @@ abstract class BasicDatabaseController {
      */
     List<CPerson> generateAsJson(final int n) {
         try {
-            final List<CPerson> people = generateCorrect(2);
-            final List<CPerson> filtered = filterOtherDatabases(people);
-            final String json = mapper.writeValueAsString(filtered);
+            final List<CPerson> people = generateValid(2);
+            final String json = mapper.writeValueAsString(people);
             return mapper.readValue(json, reference);
         } catch (Exception e) {
             logger.warn(e.getMessage());
@@ -53,7 +52,7 @@ abstract class BasicDatabaseController {
     /**
      * Generates people with correct links between objects
      */
-    List<CPerson> generateCorrect(final int n) {
+    List<CPerson> generateValid(final int n) {
         final List<CPerson> people = factory.build(n);
         return filterOtherDatabases(people);
     }

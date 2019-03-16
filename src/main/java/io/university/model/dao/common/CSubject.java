@@ -1,7 +1,7 @@
 package io.university.model.dao.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.dummymaker.annotation.complex.GenList;
+import io.dummymaker.annotation.complex.GenSet;
 import io.dummymaker.annotation.complex.GenTime;
 import io.dummymaker.annotation.simple.number.GenUByte;
 import io.dummymaker.annotation.simple.number.GenUInteger;
@@ -12,8 +12,8 @@ import io.dummymaker.generator.simple.impl.EmbeddedGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ! NO DESCRIPTION !
@@ -46,9 +46,9 @@ public class CSubject implements Serializable {
     private CSchedule schedule;
 
     @JsonIgnore
-    @GenList(value = EmbeddedGenerator.class, depth = 7)
+    @GenSet(value = EmbeddedGenerator.class, depth = 8)
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<CGrade> grades = new ArrayList<>();
+    private Set<CGrade> grades = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "speciality_uid")
@@ -90,7 +90,7 @@ public class CSubject implements Serializable {
         this.schedule = schedule;
     }
 
-    public List<CGrade> getGrades() {
+    public Set<CGrade> getGrades() {
         return grades;
     }
 

@@ -21,8 +21,8 @@ public abstract class BasicJpaStorage<T, ID extends Serializable>
         extends BasicStorageUtils<T, ID>
         implements IStorage<T, ID> {
 
-    final Logger logger = LoggerFactory.getLogger(BasicJpaStorage.class);
-    final JpaRepository<T, ID> repository;
+    protected final Logger logger = LoggerFactory.getLogger(BasicJpaStorage.class);
+    protected final JpaRepository<T, ID> repository;
 
     public BasicJpaStorage(JpaRepository<T, ID> repository) {
         this.repository = repository;
