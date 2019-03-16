@@ -124,7 +124,7 @@ public class CPeopleFactory extends BasicFactory<CPerson> {
         for (CEdition edition : editions) {
             for (CPublishment publishment : edition.getPublishments()) {
                 final CPerson person = randomPick(people);
-                publishment.addEdition(edition);
+                publishment.setEdition(edition);
                 publishment.setPerson(person);
                 person.addPublishment(publishment);
             }

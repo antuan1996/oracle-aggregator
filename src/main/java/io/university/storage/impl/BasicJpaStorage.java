@@ -71,7 +71,10 @@ public abstract class BasicJpaStorage<T, ID extends Serializable>
     @Override
     public List<T> save(Collection<T> t) {
         try {
-            return isValid(t) ? repository.saveAll(t) : Collections.emptyList();
+            if(isNotValid(t))
+                return Collections.emptyList();
+
+            return repository.saveAll(t);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return Collections.emptyList();

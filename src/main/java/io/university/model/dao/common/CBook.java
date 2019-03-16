@@ -26,7 +26,7 @@ public class CBook {
     private Integer id;
 
     @GenUuid
-    private String ISBN;
+    private String isbn;
 
     @GenName
     private String name;
@@ -43,8 +43,8 @@ public class CBook {
         return id;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
     public String getName() {
@@ -72,7 +72,7 @@ public class CBook {
         CBook cBook = (CBook) o;
 
         if (id != null ? !id.equals(cBook.id) : cBook.id != null) return false;
-        if (ISBN != null ? !ISBN.equals(cBook.ISBN) : cBook.ISBN != null) return false;
+        if (isbn != null ? !isbn.equals(cBook.isbn) : cBook.isbn != null) return false;
         if (name != null ? !name.equals(cBook.name) : cBook.name != null) return false;
         return publishTimestamp != null ? publishTimestamp.equals(cBook.publishTimestamp) : cBook.publishTimestamp == null;
     }
@@ -80,7 +80,7 @@ public class CBook {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (ISBN != null ? ISBN.hashCode() : 0);
+        result = 31 * result + (isbn != null ? isbn.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (publishTimestamp != null ? publishTimestamp.hashCode() : 0);
         return result;

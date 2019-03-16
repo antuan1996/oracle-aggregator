@@ -83,6 +83,7 @@ public class CEdition {
 
     public CPublishment addPublishment(CPublishment publishment) {
         this.publishments.add(publishment);
+        publishment.setEdition(this);
         return publishment;
     }
 

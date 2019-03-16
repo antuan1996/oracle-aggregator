@@ -57,13 +57,6 @@ public class CPerson implements Serializable {
     @GenUInteger
     private Integer citationIndex;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "cschedule_mapper",
-            joinColumns = {@JoinColumn(name = "person_uid")},
-            inverseJoinColumns = {@JoinColumn(name = "schedule_uid")}
-    )
-    private Set<CSchedule> schedules = new HashSet<>();
 
     @GenEmbedded
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
@@ -72,6 +65,7 @@ public class CPerson implements Serializable {
     @GenEmbedded
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private CStudy study;
+
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<CProjectParticipation> participations = new HashSet<>();
@@ -90,6 +84,15 @@ public class CPerson implements Serializable {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<CLiving> livings = new HashSet<>();
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "cschedule_mapper",
+            joinColumns = {@JoinColumn(name = "person_uid")},
+            inverseJoinColumns = {@JoinColumn(name = "schedule_uid")}
+    )
+    private Set<CSchedule> schedules = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -147,6 +150,10 @@ public class CPerson implements Serializable {
         return workHistory;
     }
 
+    public void setWorkHistory(CWorkHistory workHistory) {
+        this.workHistory = workHistory;
+    }
+
     public Set<CSchedule> getSchedules() {
         return schedules;
     }
@@ -154,6 +161,10 @@ public class CPerson implements Serializable {
     public CSchedule addSchedule(CSchedule schedule) {
         this.schedules.add(schedule);
         return schedule;
+    }
+
+    public void clearSchedule() {
+        this.schedules = new HashSet<>();
     }
 
     public Set<CConference> getConferences() {
@@ -165,6 +176,10 @@ public class CPerson implements Serializable {
         return conference;
     }
 
+    public void clearConference() {
+        this.conferences = new HashSet<>();
+    }
+
     public Set<CProjectParticipation> getParticipations() {
         return participations;
     }
@@ -172,6 +187,10 @@ public class CPerson implements Serializable {
     public CProjectParticipation addParticipation(CProjectParticipation participation) {
         this.participations.add(participation);
         return participation;
+    }
+
+    public void clearParticipation() {
+        this.participations = new HashSet<>();
     }
 
     public Set<CPublishment> getPublishments() {
@@ -183,6 +202,10 @@ public class CPerson implements Serializable {
         return publishment;
     }
 
+    public void clearPublishment() {
+        this.publishments = new HashSet<>();
+    }
+
     public Set<CReading> getReadings() {
         return readings;
     }
@@ -190,6 +213,10 @@ public class CPerson implements Serializable {
     public CReading addReading(CReading reading) {
         this.readings.add(reading);
         return reading;
+    }
+
+    public void clearReadings() {
+        this.readings = new HashSet<>();
     }
 
     public Set<CGrade> getGrades() {
@@ -202,6 +229,10 @@ public class CPerson implements Serializable {
         return grade;
     }
 
+    public void clearGrades() {
+        this.grades = new HashSet<>();
+    }
+
     public Set<CVisit> getVisits() {
         return visits;
     }
@@ -209,6 +240,10 @@ public class CPerson implements Serializable {
     public CVisit addVisit(CVisit visit) {
         this.visits.add(visit);
         return visit;
+    }
+
+    public void clearVisits() {
+        this.visits = new HashSet<>();
     }
 
     public Set<CLiving> getLivings() {
@@ -220,6 +255,10 @@ public class CPerson implements Serializable {
         return living;
     }
 
+    public void clearLivings() {
+        this.livings = new HashSet<>();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -227,7 +266,6 @@ public class CPerson implements Serializable {
 
         CPerson cPerson = (CPerson) o;
 
-        if (id != null ? !id.equals(cPerson.id) : cPerson.id != null) return false;
         if (name != null ? !name.equals(cPerson.name) : cPerson.name != null) return false;
         if (middleName != null ? !middleName.equals(cPerson.middleName) : cPerson.middleName != null) return false;
         if (surname != null ? !surname.equals(cPerson.surname) : cPerson.surname != null) return false;
@@ -238,8 +276,7 @@ public class CPerson implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (birthTimestamp != null ? birthTimestamp.hashCode() : 0);

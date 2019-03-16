@@ -30,10 +30,10 @@ public class CStudy implements Serializable {
     private String groupNum;
 
     @GenBoolean
-    private Boolean isBudgetPaid;
+    private Boolean budgetPaid;
 
     @GenBoolean
-    private Boolean isFullTime;
+    private Boolean fullTime;
 
     @GenTime
     private Timestamp startTimestamp;
@@ -62,20 +62,22 @@ public class CStudy implements Serializable {
         return speciality;
     }
 
-    public Boolean getBudgetPaid() {
-        return isBudgetPaid;
+    public Boolean isBudgetPaid() {
+        return budgetPaid;
     }
 
-    public Boolean getFullTime() {
-        return isFullTime;
+    public Boolean isFullTime() {
+        return fullTime;
     }
 
+    @JsonIgnore
     public Boolean isPaid() {
-        return !isBudgetPaid;
+        return !budgetPaid;
     }
 
+    @JsonIgnore
     public Boolean isPartTime() {
-        return !isFullTime;
+        return !fullTime;
     }
 
     public Integer getId() {
@@ -124,9 +126,9 @@ public class CStudy implements Serializable {
         if (id != null ? !id.equals(cStudy.id) : cStudy.id != null) return false;
         if (course != null ? !course.equals(cStudy.course) : cStudy.course != null) return false;
         if (groupNum != null ? !groupNum.equals(cStudy.groupNum) : cStudy.groupNum != null) return false;
-        if (isBudgetPaid != null ? !isBudgetPaid.equals(cStudy.isBudgetPaid) : cStudy.isBudgetPaid != null)
+        if (budgetPaid != null ? !budgetPaid.equals(cStudy.budgetPaid) : cStudy.budgetPaid != null)
             return false;
-        return isFullTime != null ? isFullTime.equals(cStudy.isFullTime) : cStudy.isFullTime == null;
+        return fullTime != null ? fullTime.equals(cStudy.fullTime) : cStudy.fullTime == null;
     }
 
     @Override
@@ -134,8 +136,8 @@ public class CStudy implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (course != null ? course.hashCode() : 0);
         result = 31 * result + (groupNum != null ? groupNum.hashCode() : 0);
-        result = 31 * result + (isBudgetPaid != null ? isBudgetPaid.hashCode() : 0);
-        result = 31 * result + (isFullTime != null ? isFullTime.hashCode() : 0);
+        result = 31 * result + (budgetPaid != null ? budgetPaid.hashCode() : 0);
+        result = 31 * result + (fullTime != null ? fullTime.hashCode() : 0);
         return result;
     }
 }

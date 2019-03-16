@@ -1,6 +1,6 @@
 package io.university.service.validator.impl;
 
-import io.university.model.dao.common.*;
+import io.university.model.dao.common.CPerson;
 import io.university.service.validator.IValidator;
 import io.university.storage.impl.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * ! NO DESCRIPTION !
@@ -31,48 +30,50 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
         if(CollectionUtils.isEmpty(people))
             return Collections.emptyList();
 
-        for (CPerson person : people) {
-            if (!CollectionUtils.isEmpty(people.get(0).getGrades())) {
-                for (CGrade grade : person.getGrades()) {
-                    final CSubject subject = grade.getSubject();
-                    if (subject != null) {
-                        final CSpeciality speciality = subject.getSpeciality();
-                        if (speciality != null) {
-                            //specialityStorage.save(speciality);
-                            speciality.addSubject(subject);
-                            subject.setSpeciality(speciality);
-                        }
-
-                        grade.setSubject(subject);
-                        subject.addGrade(grade);
-                        //specialityStorage.save(speciality);
-                    }
-                    person.addGrade(grade);
-                }
-            }
-
-            final CStudy study = person.getStudy();
-            if(study != null) {
-                study.setPerson(person);
-
-                final CSpeciality speciality = study.getSpeciality();
-                if(speciality != null) {
-                    //specialityStorage.save(speciality);
-                }
-            }
-
-            final Set<CSchedule> schedules = person.getSchedules();
-            if(!CollectionUtils.isEmpty(schedules)) {
-                for (CSchedule schedule : schedules) {
-                    schedule.addPerson(person);
-                    final CSubject subject = schedule.getSubject();
-                    if(subject != null) {
-                        //specialityStorage.save(speciality);
-                    }
-                }
-            }
-        }
-
-        return Collections.emptyList();
+        return people;
+//
+//        for (CPerson person : people) {
+//            if (!CollectionUtils.isEmpty(people.get(0).getGrades())) {
+//                for (CGrade grade : person.getGrades()) {
+//                    final CSubject subject = grade.getSubject();
+//                    if (subject != null) {
+//                        final CSpeciality speciality = subject.getSpeciality();
+//                        if (speciality != null) {
+//                            //specialityStorage.save(speciality);
+//                            speciality.addSubject(subject);
+//                            subject.setSpeciality(speciality);
+//                        }
+//
+//                        grade.setSubject(subject);
+//                        subject.addGrade(grade);
+//                        //specialityStorage.save(speciality);
+//                    }
+//                    person.addGrade(grade);
+//                }
+//            }
+//
+//            final CStudy study = person.getStudy();
+//            if(study != null) {
+//                study.setPerson(person);
+//
+//                final CSpeciality speciality = study.getSpeciality();
+//                if(speciality != null) {
+//                    //specialityStorage.save(speciality);
+//                }
+//            }
+//
+//            final Set<CSchedule> schedules = person.getSchedules();
+//            if(!CollectionUtils.isEmpty(schedules)) {
+//                for (CSchedule schedule : schedules) {
+//                    schedule.addPerson(person);
+//                    final CSubject subject = schedule.getSubject();
+//                    if(subject != null) {
+//                        //specialityStorage.save(speciality);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return Collections.emptyList();
     }
 }

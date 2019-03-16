@@ -29,7 +29,7 @@ public class CPublishment {
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "edition_uid")
-    private CEdition editions;
+    private CEdition edition;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,12 +56,12 @@ public class CPublishment {
         this.person = person;
     }
 
-    public CEdition getEditions() {
-        return editions;
+    public CEdition getEdition() {
+        return edition;
     }
 
-    public void setEditions(CEdition editions) {
-        this.editions = editions;
+    public void setEdition(CEdition edition) {
+        this.edition = edition;
     }
 
     @Override
