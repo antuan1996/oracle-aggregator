@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class OGradeStorage extends BasicJpaStorage<OGrade, Integer> {
+public class OGradeStorage extends BasicJpaStorage<OGrade, String> {
 
     @Autowired
     public OGradeStorage(final OGradeRepository repository) {

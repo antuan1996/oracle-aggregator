@@ -88,7 +88,6 @@ public class CSchedule implements Serializable {
 
         CSchedule cSchedule = (CSchedule) o;
 
-        if (id != cSchedule.id) return false;
         if (startTimestamp != null ? !startTimestamp.equals(cSchedule.startTimestamp) : cSchedule.startTimestamp != null)
             return false;
         if (endTimestamp != null ? !endTimestamp.equals(cSchedule.endTimestamp) : cSchedule.endTimestamp != null)
@@ -99,8 +98,7 @@ public class CSchedule implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+        int result = startTimestamp != null ? startTimestamp.hashCode() : 0;
         result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
         result = 31 * result + (audience != null ? audience.hashCode() : 0);
         result = 31 * result + (campusId != null ? campusId.hashCode() : 0);

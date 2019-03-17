@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @since 16.02.2019
  */
 @Component
-public class CGradeStorage extends BasicJpaStorage<CGrade, Integer> {
+public class CGradeStorage extends BasicJpaStorage<CGrade, String> {
 
     @Autowired
     public CGradeStorage(final CGradeRepository repository) {

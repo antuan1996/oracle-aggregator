@@ -18,15 +18,16 @@ import java.util.List;
  */
 abstract class BasicDatabaseController {
 
-    private final Logger logger = LoggerFactory.getLogger(BasicDatabaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BasicDatabaseController.class);
 
     private final CPeopleFactory factory;
-    private final ObjectMapper mapper = new ObjectMapper();
-    private final TypeReference<List<CPerson>> reference = new TypeReference<List<CPerson>>() {
-    };
+    private final ObjectMapper jsonMapper;
+    private final TypeReference<List<CPerson>> reference;
 
     BasicDatabaseController(CPeopleFactory factory) {
         this.factory = factory;
+        this.jsonMapper = new ObjectMapper();
+        this.reference = new TypeReference<List<CPerson>>() { };
     }
 
     /**
@@ -38,11 +39,11 @@ abstract class BasicDatabaseController {
     /**
      * Emulate json serialisation and deserialization
      */
-    List<CPerson> generateAsJson(final int n) {
+    List<CPerson> generateAsJson(final int amount) {
         try {
-            final List<CPerson> people = generateValid(2);
-            final String json = mapper.writeValueAsString(people);
-            return mapper.readValue(json, reference);
+            final List<CPerson> people = generateValid(amount);
+            final String json = jsonMapper.writeValueAsString(people);
+            return jsonMapper.readValue(json, reference);
         } catch (Exception e) {
             logger.warn(e.getMessage());
             return Collections.emptyList();
@@ -52,8 +53,8 @@ abstract class BasicDatabaseController {
     /**
      * Generates people with correct links between objects
      */
-    List<CPerson> generateValid(final int n) {
-        final List<CPerson> people = factory.build(n);
+    List<CPerson> generateValid(final int amount) {
+        final List<CPerson> people = factory.build(amount);
         return filterOtherDatabases(people);
     }
 }

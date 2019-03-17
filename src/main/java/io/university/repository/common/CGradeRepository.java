@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 16.02.2019
  */
 @Repository
-public interface CGradeRepository extends JpaRepository<CGrade, Integer> {
+public interface CGradeRepository extends JpaRepository<CGrade, String> {
 
 }

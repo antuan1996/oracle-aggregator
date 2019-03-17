@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * ! NO DESCRIPTION !
@@ -27,6 +25,7 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
     @Autowired private CSubjectStorage subjectStorage;
     @Autowired private CPersonStorage peopleStorage;
     @Autowired private CStudyStorage studyStorage;
+    @Autowired private CGradeStorage gradeStorage;
 
     @Override
     public List<CPerson> validate(List<CPerson> people) {
@@ -38,7 +37,16 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
         final Map<Integer, CSubject> subjectMap = new HashMap<>();
         final Map<Integer, CStudy> studyMap = new HashMap<>();
 
+        final List<CPerson> validPeople = new ArrayList<>(people.size());
+
         for (CPerson p : people) {
+            final CPerson validPerson = peopleStorage.findByFullNameAndBirth(
+                    p.getName(),
+                    p.getMiddleName(),
+                    p.getSurname(),
+                    p.getBirthPlace(),
+                    p.getBirthTimestamp()).orElse(p);
+
             if (p.getStudy() != null) {
                 CStudy study = studyMap.computeIfAbsent(p.getStudy().hashCode(),
                         (k) -> studyStorage.find(p.getStudy().getId()).orElse(p.getStudy()));
@@ -51,11 +59,11 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
 
                 if (study.getSpeciality() != null) {
                     CSpeciality speciality = getSpeciality(study.getSpeciality(), specialityMap);
-                    fillStudy(speciality, studyMap);
+                    fillStudy(speciality, study.getSpeciality().getStudy(), studyMap);
                     study.setSpeciality(speciality);
                 }
 
-                p.setStudy(study);
+                validPerson.setStudy(study);
             }
 
             CWorkHistory history = p.getWorkHistory();
@@ -65,30 +73,37 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
                             (k) -> departmentStorage.find(history.getDepartment().getId()).orElse(history.getDepartment()));
                     history.setDepartment(department);
                 }
+
+                validPerson.setWorkHistory(history);
             }
 
-            if (CollectionUtils.isEmpty(p.getSchedules()))
-                continue;
+            if (!CollectionUtils.isEmpty(p.getSchedules())) {
+                for (CSchedule schedule : p.getSchedules()) {
+                    if (schedule.getSubject() == null)
+                        continue;
 
-            for (CSchedule schedule : p.getSchedules()) {
-                if (schedule.getSubject() == null)
-                    continue;
+                    CSubject subject = subjectMap.computeIfAbsent(schedule.getSubject().hashCode(),
+                            (k) -> subjectStorage.find(schedule.getSubject().getCode()).orElse(schedule.getSubject()));
+                    if (subject != schedule.getSubject()) {
+                        final List<CGrade> grades = schedule.getSubject().getGrades().stream()
+                                .filter(g -> !gradeStorage.exist(g.getId()))
+                                .collect(Collectors.toList());
+                        subject.getGrades().addAll(grades);
+                    }
 
-                CSubject subject = subjectMap.computeIfAbsent(schedule.getSubject().hashCode(),
-                        (k) -> subjectStorage.find(schedule.getSubject().getCode()).orElse(schedule.getSubject()));
-                if (subject != schedule.getSubject()) {
-                    subject.getGrades().addAll(schedule.getSubject().getGrades());
+                    if (subject.getSpeciality() != null) {
+                        CSpeciality speciality = getSpeciality(subject.getSpeciality(), specialityMap);
+                        fillStudy(speciality, subject.getSpeciality().getStudy(), studyMap);
+                        subject.setSpeciality(speciality);
+                    }
                 }
-
-                if (subject.getSpeciality() != null) {
-                    CSpeciality speciality = getSpeciality(subject.getSpeciality(), specialityMap);
-                    fillStudy(speciality, studyMap);
-                    subject.setSpeciality(speciality);
-                }
+                p.getSchedules().forEach(validPerson::addSchedule);
             }
+
+            validPeople.add(validPerson);
         }
 
-        return people;
+        return validPeople;
     }
 
     private CSpeciality getSpeciality(CSpeciality speciality,
@@ -99,9 +114,14 @@ public class CPersonOracleValidator implements IValidator<CPerson> {
     }
 
     private void fillStudy(CSpeciality speciality,
+                           CStudy primeStudy,
                            Map<Integer, CStudy> studyMap) {
         if (speciality.getStudy() != null) {
             CStudy cStudy = studyMap.computeIfAbsent(speciality.getStudy().hashCode(), (k) -> speciality.getStudy());
+            speciality.setStudy(cStudy);
+        } else if(primeStudy != null) {
+            CStudy cStudy = studyMap.computeIfAbsent(primeStudy.hashCode(),
+                    (k) -> studyStorage.find(primeStudy.getId()).orElse(primeStudy));
             speciality.setStudy(cStudy);
         }
     }

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 16.02.2019
  */
 @Repository
-public interface OGradeRepository extends JpaRepository<OGrade, Integer> {
+public interface OGradeRepository extends JpaRepository<OGrade, String> {
 
 }
