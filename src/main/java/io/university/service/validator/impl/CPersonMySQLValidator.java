@@ -88,7 +88,7 @@ public class CPersonMySQLValidator implements IValidator<CPerson> {
             validPerson.clearParticipation();
             validParticipations.forEach(validPerson::addParticipation);
 
-            final List<CPublishment> validPublishments = new ArrayList<CPublishment>(p.getPublishments().size());
+            final List<CPublishment> validPublishments = new ArrayList<>(p.getPublishments().size());
             for (CPublishment publishment: p.getPublishments()) {
                 if (publishment.getEdition() == null)
                     continue;
@@ -97,8 +97,10 @@ public class CPersonMySQLValidator implements IValidator<CPerson> {
                 publishment.setEdition(edition);
                 validPublishments.add(publishment);
             }
-            validPerson.clearPublishment();
-            validPublishments.forEach(validPerson::addPublishment);
+            if(!validPublishments.isEmpty()){
+                validPerson.clearPublishment();
+                validPublishments.forEach(validPerson::addPublishment);
+            }
 
             validPeople.add(validPerson);
         }
