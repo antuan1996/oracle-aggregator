@@ -114,6 +114,10 @@ public class CPerson implements Serializable {
         return citationIndex;
     }
 
+    public void setCitationIndex(Integer value){
+        this.citationIndex = value;
+    }
+
     public String getName() {
         return name;
     }

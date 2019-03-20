@@ -53,6 +53,7 @@ public class CPersonMySQLValidator implements IValidator<CPerson> {
                     p.getSurname(),
                     p.getBirthPlace(),
                     p.getBirthTimestamp()).orElse(p);
+            validPerson.setCitationIndex(p.getCitationIndex());
 
             final List<CReading> validReadings = new ArrayList<>(p.getReadings().size());
             for (CReading reading: p.getReadings()) {
