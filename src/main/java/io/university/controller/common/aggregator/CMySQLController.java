@@ -1,6 +1,7 @@
 package io.university.controller.common.aggregator;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.university.model.dao.common.CPerson;
 import io.university.service.factory.impl.CPeopleFactory;
 import io.university.service.validator.impl.CPersonMySQLValidator;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
@@ -23,8 +25,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/common/mysql")
 public class CMySQLController extends BasicDatabaseController {
 
-    @Autowired private CPersonStorage peopleStorage;
-    @Autowired private CPersonMySQLValidator validator;
+    @Autowired
+    private CPersonStorage peopleStorage;
+    @Autowired
+    private CPersonMySQLValidator validator;
 
     @Autowired
     public CMySQLController(CPeopleFactory factory) {
@@ -51,8 +55,12 @@ public class CMySQLController extends BasicDatabaseController {
             notes = "Emulates load operation for MySQL"
     )
     @GetMapping("/load/test")
-    public List<CPerson> testLoad() {
-        final List<CPerson> people = generateAsJson(2);
+    public List<CPerson> testLoad(
+            @ApiParam(value = "Amount users to generate", defaultValue = "2")
+            @RequestParam(value = "amount", required = false) Integer amount
+    ) {
+        final int generateAmount = (amount == null || amount < 1) ? ThreadLocalRandom.current().nextInt(2, 4) : amount;
+        final List<CPerson> people = generateAsJson(generateAmount);
         return load(people);
     }
 

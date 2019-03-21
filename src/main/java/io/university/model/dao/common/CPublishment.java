@@ -26,7 +26,6 @@ public class CPublishment {
     @GenTime
     private Timestamp publishTimestamp;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "edition_uid")
     private CEdition edition;

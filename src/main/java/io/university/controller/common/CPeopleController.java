@@ -5,8 +5,8 @@ import io.university.service.factory.impl.CPeopleFactory;
 import io.university.storage.impl.common.CPersonStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,8 +30,8 @@ public class CPeopleController {
         return peopleStorage.findAll();
     }
 
-    @GetMapping("/fill/{amount}")
-    public List<CPerson> fillWithPeople(@PathVariable(name = "amount", required = false) Integer amount) {
+    @GetMapping("/fill")
+    public List<CPerson> fillWithPeople(@RequestParam(name = "amount", required = false) Integer amount) {
         final int genAmount = (amount != null && amount > 0)
                 ? amount
                 : ThreadLocalRandom.current().nextInt(2, 4);
