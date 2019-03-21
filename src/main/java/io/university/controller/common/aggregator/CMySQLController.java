@@ -7,10 +7,7 @@ import io.university.service.validator.impl.CPersonMySQLValidator;
 import io.university.storage.impl.common.CPersonStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +61,7 @@ public class CMySQLController extends BasicDatabaseController {
             notes = "Load endpoint to post data for MySQL"
     )
     @PostMapping("/load")
-    public List<CPerson> load(final List<CPerson> people) {
+    public List<CPerson> load(@RequestBody final List<CPerson> people) {
         final List<CPerson> validated = validator.validate(people);
         return peopleStorage.save(validated);
     }
