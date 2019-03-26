@@ -177,6 +177,7 @@ public class CPerson implements Serializable {
 
     public CConference addConference(CConference conference) {
         this.conferences.add(conference);
+        conference.addPerson(this);
         return conference;
     }
 
@@ -190,6 +191,7 @@ public class CPerson implements Serializable {
 
     public CProjectParticipation addParticipation(CProjectParticipation participation) {
         this.participations.add(participation);
+        participation.setPerson(this);
         return participation;
     }
 
@@ -203,6 +205,7 @@ public class CPerson implements Serializable {
 
     public CPublishment addPublishment(CPublishment publishment) {
         this.publishments.add(publishment);
+        publishment.setPerson(this);
         return publishment;
     }
 
@@ -216,6 +219,7 @@ public class CPerson implements Serializable {
 
     public CReading addReading(CReading reading) {
         this.readings.add(reading);
+        reading.setPerson(this);
         return reading;
     }
 
